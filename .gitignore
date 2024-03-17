@@ -1,0 +1,10 @@
+# Local data location
+data/dataset
+data/results
+models/saved_models
+
+# Cache Locations
+.ipynb_checkpoints
+utils/__pycache__
+data/__pycache__
+__pycache__
