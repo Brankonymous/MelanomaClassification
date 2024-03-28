@@ -1,11 +1,12 @@
+from utils import loadDataset
+
 class TrainNeuralNetwork():
     def __init__(self, config):
         self.config = config
 
-    def startTrain(self, val_fold):
-        print('[Train] Starting...')
-        
+    def startTrain(self, validationFold):
         # Initialize dataset
+        trainDataset = loadDataset(isTrain=True)
 
         # Generate DataLoader
 

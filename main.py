@@ -6,13 +6,13 @@ import datetime
 
 def train(config):
     start = datetime.datetime.now()
+    print('[Train] Starting...') 
     for val_fold in range(1, K_FOLD+1):
-        print('Time from REAL beginig: ', datetime.datetime.now() - start)
         print(f'--------- Validation fold {val_fold} ---------')
         
         trainNeuralNet = TrainNeuralNetwork(config=config)
         trainNeuralNet.startTrain(val_fold)
-    print('Training lasted for: ', datetime.datetime.now() - start)
+    print('[Train] Time taken: ', datetime.datetime.now() - start)
 
 def test(config):
     testNeuralNet = TestNeuralNetwork(config=config)
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     # Common params
-    parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TRAIN_AND_TEST.name)
-    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.CNN.name)
+    parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TRAIN.name)
+    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.VGG.name)
     parser.add_argument('--save_model', help='Save model during training', default=True)
     
     # Wrapping configuration into a dictionary
