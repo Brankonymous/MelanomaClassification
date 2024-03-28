@@ -11,6 +11,11 @@ TEST_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Test_Groun
 SAVED_MODEL_PATH = 'models/saved_models/'
 SAVED_RESULTS_PATH = 'data/results/'
 
+# Dataset processing
+MEAN_PARAMS = [0.485, 0.456, 0.406]
+STD_PARAMS = [0.229, 0.224, 0.225]
+RESIZE_PARAMS = (500, 500)
+
 # Model constants
 NUM_WORKERS = 0
 BATCH_SIZE = 64

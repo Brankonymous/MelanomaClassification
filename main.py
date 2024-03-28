@@ -7,17 +7,14 @@ import datetime
 def train(config):
     start = datetime.datetime.now()
     print('[Train] Starting...') 
-    for val_fold in range(1, K_FOLD+1):
-        print(f'--------- Validation fold {val_fold} ---------')
         
-        trainNeuralNet = TrainNeuralNetwork(config=config)
-        trainNeuralNet.startTrain(val_fold)
+    trainNeuralNet = TrainNeuralNetwork(config=config)
+    trainNeuralNet.startTrain()
     print('[Train] Time taken: ', datetime.datetime.now() - start)
 
 def test(config):
     testNeuralNet = TestNeuralNetwork(config=config)
-    for val_fold in range(1, K_FOLD+1):
-        testNeuralNet.startTest(val_fold)
+    testNeuralNet.startTest()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -2,9 +2,7 @@ class TestNeuralNetwork():
     def __init__(self, config):
         self.config = config
 
-    def startTest(self, val_fold):
-        print("[Test] Val fold: " + str(val_fold))
-            
+    def startTest(self):
         # Initialize dataset
 
         # Generate DataLoader

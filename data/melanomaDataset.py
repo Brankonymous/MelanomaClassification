@@ -1,8 +1,6 @@
 from torch.utils.data import Dataset
-import numpy as np
 import pandas as pd
-import torchvision.io as io
-
+from PIL import Image
 from utils.constants import *
 
 class MelanomaDataset(Dataset):
@@ -15,18 +13,18 @@ class MelanomaDataset(Dataset):
         self._targetTransform = targetTransform
 
     def __len__(self):
-        return len(self.dataset_csv)
+        return len(self._datasetCSV)
 
     def __getitem__(self, idx):
         imagePath = self._datasetPath + '/' + self._datasetCSV.iloc[idx, 0] + '.jpg'
         classLabel = self._datasetCSV.iloc[idx, 1]
 
-        imageTensor = io.read_image(imagePath)
+        image = Image.open(imagePath)
 
         if self._transform:
-            imageTensor = self._transform(imageTensor)
+            image = self._transform(image)
 
         if self._targetTransform:
             classLabel = self._targetTransform(classLabel)
 
-        return imageTensor, classLabel
+        return image, classLabel
