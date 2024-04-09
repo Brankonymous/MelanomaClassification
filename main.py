@@ -13,8 +13,12 @@ def train(config):
     print('[Train] Time taken: ', datetime.datetime.now() - start)
 
 def test(config):
+    start = datetime.datetime.now()
+    print('[Test] Starting...') 
+        
     testNeuralNet = TestNeuralNetwork(config=config)
     testNeuralNet.startTest()
+    print('[Test] Time taken: ', datetime.datetime.now() - start)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
