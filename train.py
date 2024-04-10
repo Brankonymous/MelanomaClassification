@@ -2,6 +2,8 @@ from utils import loadDataset
 import torch
 from utils.constants import *
 import warnings
+import xgboost as xgb
+
 
 warnings.filterwarnings('ignore')
 
@@ -20,12 +22,16 @@ class TrainNeuralNetwork():
         model = None
         if self.config['model_name'] == 'VGG':
             model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
+        elif self.config['model_name'] == 'XGBoost':
+            model = xgb.XGBClassifier()
+        else:
+            raise ValueError("Please choose either VGG or XGBoost")
 
         # Loss function
-        loss = torch.nn.CrossEntropyLoss()
+        loss = torch.nn.CrossEntropyLoss() if self.config['model_name'] == 'VGG' else None
 
-        # Optimizer
-        optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+        # Optimizer (not needed for xgboost)
+        optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY) if self.config['model_name'] == 'VGG' else None
 
         self.trainLoop(model, loss, optimizer, DataLoader)
 
@@ -35,11 +41,17 @@ class TrainNeuralNetwork():
             for i, (images, labels) in enumerate(DataLoader):
                 images, labels = images.to(DEVICE), labels.to(DEVICE)
 
-                optimizer.zero_grad()
-                outputs = model(images)
-                lossValue = loss(outputs, labels)
-                lossValue.backward()
-                optimizer.step()
+                #check if optimizer defined (vgg)
+                if optimizer: 
+                    optimizer.zero_grad()
+
+                #check if model is a Pytorch model(vgg), irelevant for xgboost
+                if isinstance(model, torch.nn.Module): 
+                    optimizer.zero_grad()
+                    outputs = model(images)
+                    lossValue = loss(outputs, labels)
+                    lossValue.backward()
+                    optimizer.step()
 
                 if i % 100 == 0:
                     print(f'Epoch: {epoch}, Batch: {i}, Loss: {lossValue.item()}')
