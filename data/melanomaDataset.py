@@ -1,7 +1,9 @@
 from torch.utils.data import Dataset
 import pandas as pd
 from PIL import Image
-from utils.constants import *
+import torch
+import torchvision.transforms as transforms
+import torchvision.models as models
 
 class MelanomaDataset(Dataset):
     def __init__(self, isTrain=True, transform=None, targetTransform=None):
@@ -11,6 +13,8 @@ class MelanomaDataset(Dataset):
         self._datasetCSV = pd.read_csv(self._csvPath)
         self._transform = transform
         self._targetTransform = targetTransform
+        self.vgg16 = models.vgg16(pretrained=True)
+        self.vgg16.eval() #no need for further training
 
     def __len__(self):
         return len(self._datasetCSV)
@@ -26,5 +30,13 @@ class MelanomaDataset(Dataset):
 
         if self._targetTransform:
             classLabel = self._targetTransform(classLabel)
+        
+        image = transforms.ToTensor()(image)
+        image = image.unsqueeze(0)
 
-        return image, classLabel
+        # Use VGG-16 to extract features
+        with torch.no_grad():
+            features = self.vgg16(image)
+            features = torch.flatten(features, 1).numpy()
+
+        return features, classLabel

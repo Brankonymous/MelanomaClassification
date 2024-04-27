@@ -36,3 +36,4 @@ class ModelType(enum.Enum):
 class SupportedModels(enum.Enum):
     CNN = 0
     VGG = 1
+    XGBoost = 2

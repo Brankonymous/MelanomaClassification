@@ -13,8 +13,12 @@ def train(config):
     print('[Train] Time taken: ', datetime.datetime.now() - start)
 
 def test(config):
+    start = datetime.datetime.now()
+    print('[Test] Starting...') 
+        
     testNeuralNet = TestNeuralNetwork(config=config)
     testNeuralNet.startTest()
+    print('[Test] Time taken: ', datetime.datetime.now() - start)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -23,17 +27,24 @@ if __name__ == '__main__':
     parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TRAIN.name)
     parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.VGG.name)
     parser.add_argument('--save_model', help='Save model during training', default=True)
-    
-    # Wrapping configuration into a dictionary
+
     args = parser.parse_args()
     config = dict()
     for arg in vars(args):
         config[arg] = getattr(args, arg)
     
     if config['type'] == 'TRAIN' or config['type'] == 'TRAIN_AND_TEST':
-        train(config)
+        if config['model_name'] == 'VGG':
+            train(config)
+        elif config['model_name'] == 'XGBoost':
+            train(config)
+        else:
+            raise ValueError('Please choose a valid model name: VGG or XGBoost')
+            
     if config['type'] == 'TEST' or config['type'] == 'TRAIN_AND_TEST':
-        test(config)
-    
-
-    
+        if config['model_name'] == 'VGG':
+            test(config)
+        elif config['model_name'] == 'XGBoost':
+            test(config) 
+        else:
+            raise ValueError('Please choose a valid model name: VGG or XGBoost')
