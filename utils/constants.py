@@ -14,7 +14,7 @@ SAVED_RESULTS_PATH = 'data/results/'
 # Dataset processing
 MEAN_PARAMS = [0.485, 0.456, 0.406]
 STD_PARAMS = [0.229, 0.224, 0.225]
-RESIZE_PARAMS = (500, 500)
+RESIZE_PARAMS = (128, 128)
 
 # Model constants
 NUM_WORKERS = 0

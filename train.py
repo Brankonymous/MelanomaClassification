@@ -16,10 +16,10 @@ class TrainNeuralNetwork():
         # dataloader
         DataLoader = torch.utils.data.DataLoader(TrainDataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
 
-        # Load VGG-16
+        # Load VGG
         model = None
         if self.config['model_name'] == 'VGG':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
+            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True)
 
         # Loss function
         loss = torch.nn.CrossEntropyLoss()
@@ -30,16 +30,21 @@ class TrainNeuralNetwork():
         self.trainLoop(model, loss, optimizer, DataLoader)
 
     def trainLoop(self, model, loss, optimizer, DataLoader):
-        for epoch in range(EPOCHS):
+        for epoch in range(2):
+            currentAccuracy = 0
             model.train()
             for i, (images, labels) in enumerate(DataLoader):
                 images, labels = images.to(DEVICE), labels.to(DEVICE)
 
                 optimizer.zero_grad()
-                outputs = model(images)
-                lossValue = loss(outputs, labels)
+                prediction = model(images)
+                lossValue = loss(prediction, labels)
                 lossValue.backward()
                 optimizer.step()
 
-                if i % 100 == 0:
-                    print(f'Epoch: {epoch}, Batch: {i}, Loss: {lossValue.item()}')
+                currentAccuracy += (prediction.argmax(1) == labels).sum().item()
+
+                print(f'Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}')
+            currentAccuracy = (currentAccuracy * 100) / len(DataLoader.dataset)
+
+            print(f'Epoch: {epoch}, Accuracy: {currentAccuracy}')
