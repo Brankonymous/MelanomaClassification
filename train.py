@@ -1,17 +1,24 @@
+from utils import loadDataset
+import torch
+from utils.constants import *
+import warnings
+import xgboost as xgb
+import numpy as np
+
 class TrainNeuralNetwork():
     def __init__(self, config):
         self.config = config
 
     def startTrain(self):
         # Initialize dataset
-        TrainDataset = loadDataset(isTrain=True, model_name=self.config['model_name'])
+        TrainDataset = loadDataset(isTrain=True, modelName=self.config['model_name'])
 
         # dataloader
         DataLoader = torch.utils.data.DataLoader(TrainDataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
 
-        # Load VGG-16 or XGBoost
+        # Load VGG or XGBoost
         if self.config['model_name'] == 'VGG':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
+            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True)
             # model.eval()  # Set model to evaluation mode
         elif self.config['model_name'] == 'XGBoost':
             model = xgb.XGBClassifier()
@@ -24,7 +31,7 @@ class TrainNeuralNetwork():
             labels = []
             for images, batch_labels in DataLoader:
                 images = images.to(DEVICE)
-                # Perform feature extraction using VGG-16 model
+                # Perform feature extraction using VGG model
                 with torch.no_grad():
                     extracted_features = model(images).numpy()
                 features.append(extracted_features)
