@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, classification_report
 class TestNeuralNetwork():
     def __init__(self, config):
         self.config = config
-        self._vgg = models.vgg16(pretrained=True).to(DEVICE)
+        self._vgg = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth')
 
     def startTest(self):
         # Initialize dataset
@@ -38,16 +38,17 @@ class TestNeuralNetwork():
         all_predictions = []
         all_labels = []
 
-        if isinstance(model, torch.nn.Module):  # VGG models
+        if self.config['model_name'] == 'VGG':
             model.eval()
             with torch.no_grad():
                 for images, labels in TestLoader:
                     images, labels = images.to(DEVICE), labels.to(DEVICE)
-                    outputs = model(features)
-                    _, predicted = torch.max(outputs, 1)
-                    all_predictions.extend(predicted.cpu().numpy())
+                    outputs = model(images)
+                    prediction = outputs.argmax(1)
+
+                    all_predictions.extend(prediction.cpu().numpy())
                     all_labels.extend(labels.cpu().numpy())
-        else:  # XGBoost models
+        elif self.config['model_name'] == 'XGBoost':
             for images, labels in TestLoader:
                 features = images
                 predictions = model.predict(features)
@@ -55,11 +56,14 @@ class TestNeuralNetwork():
                 all_labels.extend(labels.numpy())
 
         # Calculate accuracy and generate classification report
+        classes = ['Benign', 'Malignant']
+        
+        print(all_predictions)
+        print(all_labels)
+
         accuracy = accuracy_score(all_labels, all_predictions)
-        if self.config['model_name'] == 'VGG':
-            classes = TestLoader.dataset.classes
-        elif self.config['model_name'] == 'XGBoost':
-            classes = None  # XGBoost doesn't have class names TODO MISLIM DA XGBOOST 2.0 IMA
         report = classification_report(all_labels, all_predictions, target_names=classes)
+
+        print('Accuracy: ', accuracy, '\n', 'Report: ', report)
         
         return accuracy, report

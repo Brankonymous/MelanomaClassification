@@ -27,26 +27,26 @@ class TrainNeuralNetwork():
 
         # Feature extraction for XGBoost
         if self.config['model_name'] == 'XGBoost':
-            features = []
-            labels = []
-            for images, batch_labels in DataLoader:
+            features, labels = [], []
+            for i, (images, labels) in enumerate(DataLoader):
+                print(f'Batch: {i}, Index: {i*BATCH_SIZE}')
                 images = images.to(DEVICE)
-                # Perform feature extraction using VGG model
-                with torch.no_grad():
-                    extracted_features = model(images).numpy()
-                features.append(extracted_features)
-                labels.append(batch_labels.numpy())
+                features.append(images)
+                labels.append(labels.numpy())
+            
             features = np.concatenate(features, axis=0)
             labels = np.concatenate(labels, axis=0)
-            # Train XGBoost model with extracted features
             model.fit(features, labels)
-            return  # No need to continue training loop for XGBoost
+            return 
 
         # Loss function and optimizer for VGG
         loss = torch.nn.CrossEntropyLoss() if self.config['model_name'] == 'VGG' else None
         optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY) if self.config['model_name'] == 'VGG' else None
 
         self.trainLoop(model, loss, optimizer, DataLoader)
+
+        if self.config['save_model']:
+            torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
 
     def trainLoop(self, model, loss, optimizer, DataLoader):
         for epoch in range(2):

@@ -12,7 +12,11 @@ def loadDataset(isTrain=True, modelName='VGG'):
         Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
         Resize(RESIZE_PARAMS)
     ])
-    xgboostTransform = None
+    xgboostTransform = transforms.Compose([
+        ToTensor(),
+        Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
+        Resize(RESIZE_PARAMS)
+    ])
     targetTransform = transforms.Compose([
         LabelToBinary()
     ])

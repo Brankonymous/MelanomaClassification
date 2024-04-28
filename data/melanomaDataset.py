@@ -37,12 +37,6 @@ class MelanomaDataset(Dataset):
         if self._modelName == 'VGG':
             return image, classLabel
         elif self._modelName == 'XGBoost':
-            image = transforms.ToTensor()(image)
-            image = image.unsqueeze(0)
-
-            # Use VGG-16 to extract features
-            with torch.no_grad():
-                features = self._vgg(image)
-                features = torch.flatten(features, 1).numpy()
+            features = torch.flatten(image, 1).numpy()
 
             return features, classLabel
