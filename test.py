@@ -28,10 +28,7 @@ class TestNeuralNetwork():
         else:
             raise ValueError("Please choose either VGG or XGBoost")
         
-        # Start test on trained model
-        test_accuracy, test_report = self.testModel(model, TestLoader)
-
-        return test_accuracy, test_report
+        self.testModel(model, TestLoader)
 
     def testModel(self, model, TestLoader):
         # Evaluate the model
@@ -57,13 +54,17 @@ class TestNeuralNetwork():
 
         # Calculate accuracy and generate classification report
         classes = ['Benign', 'Malignant']
-        
-        print(all_predictions)
-        print(all_labels)
 
         accuracy = accuracy_score(all_labels, all_predictions)
+        precision = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['precision']
+        recall = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['recall']
+        f1_score = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['f1-score']
         report = classification_report(all_labels, all_predictions, target_names=classes)
 
-        print('Accuracy: ', accuracy, '\n', 'Report: ', report)
-        
-        return accuracy, report
+        print(
+            'Accuracy: ', accuracy, '\n', 
+            'Precision: ', precision, '\n', 
+            'Recall: ', recall, '\n', 
+            'F! Score: ', f1_score, '\n', 
+            'Report: ', report
+        )
