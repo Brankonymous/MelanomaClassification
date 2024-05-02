@@ -14,7 +14,7 @@ class TestNeuralNetwork():
 
     def startTest(self):
         # Initialize dataset
-        TestDataset = loadDataset(isTrain=False, modelName=self.config['model_name'])
+        TestDataset, _ = loadDataset(isTrain=False, modelName=self.config['model_name'])
 
         # Generate DataLoader
         TestLoader = torch.utils.data.DataLoader(TestDataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -62,9 +62,11 @@ class TestNeuralNetwork():
         report = classification_report(all_labels, all_predictions, target_names=classes)
 
         print(
-            'Accuracy: ', accuracy, '\n', 
-            'Precision: ', precision, '\n', 
-            'Recall: ', recall, '\n', 
-            'F! Score: ', f1_score, '\n', 
+            'Accuracy: {:.2f}%'.format(accuracy * 100), '\n', 
+            'Precision: {:.2f}%'.format(precision * 100), '\n', 
+            'Recall: {:.2f}%'.format(recall * 100), '\n', 
+            'F1 Score: {:.2f}%'.format(f1_score * 100), '\n', 
             'Report: ', report
         )
+
+        return f1_score

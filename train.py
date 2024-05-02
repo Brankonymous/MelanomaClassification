@@ -35,7 +35,8 @@ class TrainNeuralNetwork():
             torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
 
     def cnnTrainLoop(self, model, loss, optimizer, TrainDataLoader, ValidationDataLoader):
-        for epoch in range(2):
+        prev_f1_score, isStop = 0, 2
+        for epoch in range(EPOCHS):
             model.train()
             for i, (images, labels) in enumerate(TrainDataLoader):
                 images, labels = images.to(DEVICE), labels.to(DEVICE)
@@ -49,7 +50,18 @@ class TrainNeuralNetwork():
                 print(f'[Train] Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}')
             
             # Validate the model
-            TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
+            f1_score = TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
+
+            # Early stopping
+            if f1_score < prev_f1_score:
+                prev_f1_score = 1000
+                isStop -= 1
+                if isStop == 0:
+                    print('Early stopping')
+                    break
+            else:
+                prev_f1_score = f1_score
+
 
     def xgbTrainLoop(self, model, DataLoader):
         features, labels = [], []
