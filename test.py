@@ -30,7 +30,7 @@ class TestNeuralNetwork():
         
         self.testModel(model, TestLoader)
 
-    def testModel(self, model, TestLoader):
+    def testModel(self, model, DataLoader):
         # Evaluate the model
         all_predictions = []
         all_labels = []
@@ -38,7 +38,7 @@ class TestNeuralNetwork():
         if self.config['model_name'] == 'VGG':
             model.eval()
             with torch.no_grad():
-                for images, labels in TestLoader:
+                for images, labels in DataLoader:
                     images, labels = images.to(DEVICE), labels.to(DEVICE)
                     outputs = model(images)
                     prediction = outputs.argmax(1)
@@ -46,7 +46,7 @@ class TestNeuralNetwork():
                     all_predictions.extend(prediction.cpu().numpy())
                     all_labels.extend(labels.cpu().numpy())
         elif self.config['model_name'] == 'XGBoost':
-            for images, labels in TestLoader:
+            for images, labels in DataLoader:
                 features = images
                 predictions = model.predict(features)
                 all_predictions.extend(predictions)
@@ -56,10 +56,10 @@ class TestNeuralNetwork():
         classes = ['Benign', 'Malignant']
 
         accuracy = accuracy_score(all_labels, all_predictions)
-        precision = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['precision']
-        recall = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['recall']
-        f1_score = classification_report(all_labels, all_predictions, target_names=classes, output_dict=True)['weighted avg']['f1-score']
-        report = classification_report(all_labels, all_predictions, target_names=classes)
+        precision = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['precision']
+        recall = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['recall']
+        f1_score = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['f1-score']
+        report = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1])
 
         print(
             'Accuracy: {:.2f}%'.format(accuracy * 100), '\n', 
