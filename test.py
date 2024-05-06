@@ -6,11 +6,13 @@ from utils.constants import *
 import xgboost as xgb
 import numpy as np
 from sklearn.metrics import accuracy_score, classification_report
+import pickle 
 
 class TestNeuralNetwork():
     def __init__(self, config):
         self.config = config
         self._vgg = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth')
+        self._xgboost = pickle.load(open(SAVED_MODEL_PATH + 'XGBoost_model', 'rb'))
 
     def startTest(self):
         # Initialize dataset
@@ -24,7 +26,7 @@ class TestNeuralNetwork():
         if self.config['model_name'] == 'VGG':
             model = self._vgg
         elif self.config['model_name'] == 'XGBoost':
-            model = xgb.XGBClassifier()
+            model = self._xgboost
         else:
             raise ValueError("Please choose either VGG or XGBoost")
         
@@ -48,7 +50,8 @@ class TestNeuralNetwork():
         elif self.config['model_name'] == 'XGBoost':
             for images, labels in DataLoader:
                 features = images
-                predictions = model.predict(features)
+                features_2d = np.array(features).reshape(features.shape[0], -1)
+                predictions = model.predict(features_2d)
                 all_predictions.extend(predictions)
                 all_labels.extend(labels.numpy())
 

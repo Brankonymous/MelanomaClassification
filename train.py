@@ -6,6 +6,7 @@ import xgboost as xgb
 import numpy as np
 from test import TestNeuralNetwork
 from sklearn.metrics import accuracy_score
+import pickle
 
 class TrainNeuralNetwork():
     def __init__(self, config):
@@ -26,15 +27,17 @@ class TrainNeuralNetwork():
             optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY) if self.config['model_name'] == 'VGG' else None
 
             self.cnnTrainLoop(model, loss, optimizer, TrainDataLoader, ValidationDataLoader)
+
+            if self.config['save_model']:
+                torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
         elif self.config['model_name'] == 'XGBoost':
             model = xgb.XGBClassifier()
             self.xgbTrainLoop(model, TrainDataLoader, ValidationDataLoader)
+
+            if self.config['save_model']:
+                pickle.dump(model, open(SAVED_MODEL_PATH + self.config['model_name'] + "_model", "wb"))
         else:
             raise ValueError("Please choose either VGG or XGBoost")
-
-        if self.config['save_model']: #ne ulazi ovde
-            print("usaooo")
-            torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
 
     def cnnTrainLoop(self, model, loss, optimizer, TrainDataLoader, ValidationDataLoader):
         prev_f1_score, isStop = 0, 2
