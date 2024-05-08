@@ -11,8 +11,6 @@ import pickle
 class TestNeuralNetwork():
     def __init__(self, config):
         self.config = config
-        self._vgg = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth')
-        self._xgboost = pickle.load(open(SAVED_MODEL_PATH + 'XGBoost_model', 'rb'))
 
     def startTest(self):
         # Initialize dataset
@@ -24,9 +22,9 @@ class TestNeuralNetwork():
         # Load model
         model = None
         if self.config['model_name'] == 'VGG':
-            model = self._vgg
+            model = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth')
         elif self.config['model_name'] == 'XGBoost':
-            model = self._xgboost
+            model = pickle.load(open(SAVED_MODEL_PATH + 'XGBoost_model', 'rb'))
         else:
             raise ValueError("Please choose either VGG or XGBoost")
         
