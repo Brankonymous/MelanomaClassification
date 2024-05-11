@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     # Common params
     parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TEST.name)
-    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.XGBoost.name)
+    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.VGG.name)
     parser.add_argument('--save_model', help='Save model during training', default=True)
 
     args = parser.parse_args()

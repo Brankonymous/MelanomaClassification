@@ -22,9 +22,9 @@ class TestNeuralNetwork():
         # Load model
         model = None
         if self.config['model_name'] == 'VGG':
-            model = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth')
+            model = torch.load(SAVED_MODEL_PATH + 'VGG_model.pth').to(DEVICE)
         elif self.config['model_name'] == 'XGBoost':
-            model = pickle.load(open(SAVED_MODEL_PATH + 'XGBoost_model', 'rb'))
+            model = pickle.load(open(SAVED_MODEL_PATH + 'XGBoost_model', 'rb')).to(DEVICE)
         else:
             raise ValueError("Please choose either VGG or XGBoost")
         

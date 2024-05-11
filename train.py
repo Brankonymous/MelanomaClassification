@@ -22,7 +22,7 @@ class TrainNeuralNetwork():
 
         # Load VGG or XGBoost
         if self.config['model_name'] == 'VGG':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True)
+            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True).to(DEVICE)
             loss = torch.nn.CrossEntropyLoss() if self.config['model_name'] == 'VGG' else None
             optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY) if self.config['model_name'] == 'VGG' else None
 
@@ -31,7 +31,7 @@ class TrainNeuralNetwork():
             if self.config['save_model']:
                 torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
         elif self.config['model_name'] == 'XGBoost':
-            model = xgb.XGBClassifier()
+            model = xgb.XGBClassifier().to(DEVICE)
             self.xgbTrainLoop(model, TrainDataLoader, ValidationDataLoader)
 
             if self.config['save_model']:
