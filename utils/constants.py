@@ -1,7 +1,8 @@
 import enum
 import torch
 
-DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+DEVICE_NAME = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEVICE = torch.device(DEVICE_NAME)
 
 TRAIN_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Training_Data'
 TEST_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Test_Data'
@@ -19,7 +20,7 @@ RESIZE_PARAMS = (128, 128)
 
 # Model constants
 NUM_WORKERS = 0
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 EPOCHS = 13
 LEARNING_RATE = 1e-4
 LR_STEP_SIZE = 5

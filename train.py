@@ -31,7 +31,7 @@ class TrainNeuralNetwork():
             if self.config['save_model']:
                 torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
         elif self.config['model_name'] == 'XGBoost':
-            model = xgb.XGBClassifier().to(DEVICE)
+            model = xgb.XGBClassifier(device=DEVICE_NAME)
             self.xgbTrainLoop(model, TrainDataLoader, ValidationDataLoader)
 
             if self.config['save_model']:
@@ -72,7 +72,6 @@ class TrainNeuralNetwork():
         features, all_labels = [], []
         for i, (images, batch_labels) in enumerate(DataLoader):
             print(f'Batch: {i}, Index: {i*BATCH_SIZE}')
-            images = images.to(DEVICE)
             features.append(images)
             all_labels.append(batch_labels.numpy().tolist())
         
@@ -80,18 +79,21 @@ class TrainNeuralNetwork():
         features_2d = features.reshape(features.shape[0], -1)
         labels = np.concatenate(all_labels, axis=0)
         
+        # features_2d = torch.from_numpy(features_2d).to(DEVICE)
+        # labels = torch.from_numpy(labels).to(DEVICE)
+
         model.fit(features_2d, labels)
 
         # Use the ValidationDataLoader for validation predictions
         validation_features, validation_labels = [], []
         for images, batch_labels in ValidationDataLoader:
-            images = images.to(DEVICE)
             validation_features.append(images)
             validation_labels.append(batch_labels.numpy().tolist())
 
         validation_features = np.concatenate(validation_features, axis=0)
         validation_features_2d = validation_features.reshape(validation_features.shape[0], -1)
         validation_labels = np.concatenate(validation_labels, axis=0)
+
         validation_predictions = model.predict(validation_features_2d)
 
         validation_accuracy = accuracy_score(validation_labels, validation_predictions)

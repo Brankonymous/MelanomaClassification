@@ -3,6 +3,7 @@ from train import TrainNeuralNetwork
 from test import TestNeuralNetwork
 from utils.constants import *
 import datetime
+import warnings
 
 def train(config):
     start = datetime.datetime.now()
@@ -21,11 +22,12 @@ def test(config):
     print('[Test] Time taken: ', datetime.datetime.now() - start)
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore')
     parser = argparse.ArgumentParser()
 
     # Common params
-    parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TEST.name)
-    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.VGG.name)
+    parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TRAIN_AND_TEST.name)
+    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.XGBoost.name)
     parser.add_argument('--save_model', help='Save model during training', default=True)
 
     args = parser.parse_args()
