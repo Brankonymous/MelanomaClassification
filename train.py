@@ -1,16 +1,20 @@
 from utils import loadDataset
 import torch
 from utils.constants import *
-import warnings
 import xgboost as xgb
 import numpy as np
 from test import TestNeuralNetwork
-from sklearn.metrics import accuracy_score
 import pickle
+import matplotlib.pyplot as plt
 
 class TrainNeuralNetwork():
     def __init__(self, config):
         self.config = config
+        self.lossByEpoch = []
+        self.accuracyByEpoch = []
+        self.recallByEpoch = []
+        self.precisionByEpoch = []
+        self.f1ScoreByEpoch = []
 
     def startTrain(self):
         # Initialize dataset
@@ -28,10 +32,14 @@ class TrainNeuralNetwork():
 
             self.cnnTrainLoop(model, loss, optimizer, TrainDataLoader, ValidationDataLoader)
 
+            if self.config['save_plot_train'] or self.config['show_plot_train']:
+                print('Plotting training info...')
+                self.plotTrainingInfo()
+
             if self.config['save_model']:
                 torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
         elif self.config['model_name'] == 'XGBoost':
-            model = xgb.XGBClassifier(device=DEVICE_NAME)
+            model = xgb.XGBClassifier(device=DEVICE_NAME, sample_type='weighted', learning_rate = 0.01, max_depth = 3, n_estimators = 200)
             self.xgbTrainLoop(model, TrainDataLoader, ValidationDataLoader)
 
             if self.config['save_model']:
@@ -40,7 +48,7 @@ class TrainNeuralNetwork():
             raise ValueError("Please choose either VGG or XGBoost")
 
     def cnnTrainLoop(self, model, loss, optimizer, TrainDataLoader, ValidationDataLoader):
-        prev_f1_score, isStop = 0, 2
+        prev_f1_score, isStop = 0, 3
         for epoch in range(EPOCHS):
             model.train()
             for i, (images, labels) in enumerate(TrainDataLoader):
@@ -55,14 +63,19 @@ class TrainNeuralNetwork():
                 print(f'[Train] Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}')
             
             # Validate the model
-            f1_score = TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
+            accuracy, precision, recall, f1_score = TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
+            self.accuracyByEpoch.append(accuracy)
+            self.recallByEpoch.append(recall)
+            self.precisionByEpoch.append(precision)
+            self.f1ScoreByEpoch.append(f1_score)
+            self.lossByEpoch.append(lossValue.item())
 
             # Early stopping
             if f1_score < prev_f1_score:
                 prev_f1_score = 1000
                 isStop -= 1
                 if isStop == 0:
-                    print('Early stopping')
+                    print('Early stopping...')
                     break
             else:
                 prev_f1_score = f1_score
@@ -78,13 +91,7 @@ class TrainNeuralNetwork():
         features = np.concatenate(features, axis=0)
         features_2d = features.reshape(features.shape[0], -1)
         labels = np.concatenate(all_labels, axis=0)
-        
-        # features_2d = torch.from_numpy(features_2d).to(DEVICE)
-        # labels = torch.from_numpy(labels).to(DEVICE)
 
-        model.fit(features_2d, labels)
-
-        # Use the ValidationDataLoader for validation predictions
         validation_features, validation_labels = [], []
         for images, batch_labels in ValidationDataLoader:
             validation_features.append(images)
@@ -94,7 +101,53 @@ class TrainNeuralNetwork():
         validation_features_2d = validation_features.reshape(validation_features.shape[0], -1)
         validation_labels = np.concatenate(validation_labels, axis=0)
 
-        validation_predictions = model.predict(validation_features_2d)
+        model.fit(np.concatenate((features_2d, validation_features_2d)), np.concatenate((labels, validation_labels)))
+        
+        # Best: 0.801709 using {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200}
 
-        validation_accuracy = accuracy_score(validation_labels, validation_predictions)
-        print(f'Validation Accuracy: {validation_accuracy}')
+    def plotTrainingInfo(self):
+        plt.title('Loss by epoch')
+        plt.plot(self.lossByEpoch, label='Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+
+        if self.config['save_plot_train']:
+            plt.savefig(SAVED_PLOT_PATH + '_' + self.config['model_name'] + '_loss_by_epoch.svg')
+        if self.config['show_plot_train']:
+            plt.show()
+        else:
+            plt.close()
+
+        plt.figure(figsize=(10, 8), dpi=150)
+
+        plt.subplot(2, 2, 1)
+        plt.title('Accuracy by epoch')
+        plt.plot(self.accuracyByEpoch, label='Accuracy')
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy')
+
+        plt.subplot(2, 2, 2)
+        plt.title('Recall by epoch')
+        plt.plot(self.recallByEpoch, label='Recall')
+        plt.xlabel('Epoch')
+        plt.ylabel('Recall')
+
+        plt.subplot(2, 2, 3)
+        plt.title('Precision by epoch')
+        plt.plot(self.precisionByEpoch, label='Precision')
+        plt.xlabel('Epoch')
+        plt.ylabel('Precision')
+
+        plt.subplot(2, 2, 4)
+        plt.title('F1 Score by epoch')
+        plt.plot(self.f1ScoreByEpoch, label='F1 Score')
+        plt.xlabel('Epoch')
+        plt.ylabel('F1 Score')
+
+        plt.tight_layout()
+        if self.config['save_plot_train']:
+            plt.savefig(SAVED_PLOT_PATH + '_' + self.config['model_name'] + '_metrics_by_epoch.svg')
+        if self.config['show_plot_train']:
+            plt.show()
+        else:
+            plt.close()

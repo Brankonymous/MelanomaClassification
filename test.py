@@ -54,13 +54,11 @@ class TestNeuralNetwork():
                 all_labels.extend(labels.numpy())
 
         # Calculate accuracy and generate classification report
-        classes = ['Benign', 'Malignant']
-
         accuracy = accuracy_score(all_labels, all_predictions)
-        precision = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['precision']
-        recall = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['recall']
-        f1_score = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1], output_dict=True)['weighted avg']['f1-score']
-        report = classification_report(all_labels, all_predictions, target_names=classes, labels=[0, 1])
+        precision = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1], output_dict=True)['weighted avg']['precision']
+        recall = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1], output_dict=True)['weighted avg']['recall']
+        f1_score = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1], output_dict=True)['weighted avg']['f1-score']
+        report = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1])
 
         print(
             'Accuracy: {:.2f}%'.format(accuracy * 100), '\n', 
@@ -70,4 +68,4 @@ class TestNeuralNetwork():
             'Report: ', report
         )
 
-        return f1_score
+        return accuracy, precision, recall, f1_score
