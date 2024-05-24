@@ -1,12 +1,12 @@
 import torch
-import torchvision.models as models
-import torchvision.transforms as transforms
 from utils import loadDataset
 from utils.constants import *
-import xgboost as xgb
 import numpy as np
 from sklearn.metrics import accuracy_score, classification_report
 import pickle 
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
 class TestNeuralNetwork():
     def __init__(self, config):
@@ -52,6 +52,7 @@ class TestNeuralNetwork():
                 predictions = model.predict(features_2d)
                 all_predictions.extend(predictions)
                 all_labels.extend(labels.numpy())
+        # print(all_labels)
 
         # Calculate accuracy and generate classification report
         accuracy = accuracy_score(all_labels, all_predictions)
@@ -68,4 +69,47 @@ class TestNeuralNetwork():
             'Report: ', report
         )
 
+        if self.config['save_plot'] or self.config['show_plot']:
+            self.plotResults(accuracy, precision, recall, f1_score, all_labels, all_predictions)
+
         return accuracy, precision, recall, f1_score
+
+    def plotResults(self, accuracy, precision, recall, f1_score, all_labels, all_predictions):
+        # Plot results as a bar chart
+        fig, ax = plt.subplots()
+        ax.bar('Accuracy', accuracy, label='Accuracy')
+        ax.bar('Precision', precision, label='Precision')
+        ax.bar('Recall', recall, label='Recall')
+        ax.bar('F1 Score', f1_score, label='F1 Score')
+
+        ax.set_ylabel('Scores')
+        ax.set_title(self.config['model_name'] + ' Model Performance')
+        ax.legend()
+        
+        if self.config['save_plot']:
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_results.png')
+        if self.config['show_plot']:
+            plt.show()
+        else:
+            plt.close()
+
+        # Plot confusion matrix
+        cm = confusion_matrix(all_labels, all_predictions)
+        ax = plt.subplot()
+        sns.heatmap(cm, annot=True, ax = ax, cmap='Blues', fmt='g')
+
+        ax.set_xlabel('Predicted labels')
+        ax.set_ylabel('True labels')
+        ax.set_title(self.config['model_name'] + ' Confusion Matrix')
+        ax.xaxis.set_ticklabels(CLASS_NAMES)
+        ax.yaxis.set_ticklabels(CLASS_NAMES)
+
+        if self.config['save_plot']:
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_confusion_matrix.png')
+        if self.config['show_plot']:
+            plt.show()
+        else:
+            plt.close()
+        
+
+

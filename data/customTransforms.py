@@ -2,7 +2,7 @@ from matplotlib import transforms
 
 class LabelToBinary(object):
     def __call__(self, sample):
-        if sample == 'malignant':
+        if sample == 'malignant' or sample == 1.0:
             return 1
         else:
             return 0

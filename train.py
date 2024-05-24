@@ -6,6 +6,7 @@ import numpy as np
 from test import TestNeuralNetwork
 import pickle
 import matplotlib.pyplot as plt
+import torch.nn as nn
 
 class TrainNeuralNetwork():
     def __init__(self, config):
@@ -27,12 +28,16 @@ class TrainNeuralNetwork():
         # Load VGG or XGBoost
         if self.config['model_name'] == 'VGG':
             model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True).to(DEVICE)
-            loss = torch.nn.CrossEntropyLoss() if self.config['model_name'] == 'VGG' else None
-            optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY) if self.config['model_name'] == 'VGG' else None
+            num_features = model.classifier[6].in_features
+            model.classifier[6] = nn.Linear(num_features, NUM_CLASSES).to(DEVICE)
+
+            weights = torch.tensor([0.19, 0.81], dtype=torch.float).to(DEVICE)
+            loss = torch.nn.CrossEntropyLoss(weight=weights).to(DEVICE)
+            optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
             self.cnnTrainLoop(model, loss, optimizer, TrainDataLoader, ValidationDataLoader)
 
-            if self.config['save_plot_train'] or self.config['show_plot_train']:
+            if self.config['save_plot'] or self.config['show_plot']:
                 print('Plotting training info...')
                 self.plotTrainingInfo()
 
@@ -51,6 +56,7 @@ class TrainNeuralNetwork():
         prev_f1_score, isStop = 0, 3
         for epoch in range(EPOCHS):
             model.train()
+            labeler = []
             for i, (images, labels) in enumerate(TrainDataLoader):
                 images, labels = images.to(DEVICE), labels.to(DEVICE)
 
@@ -60,7 +66,10 @@ class TrainNeuralNetwork():
                 lossValue.backward()
                 optimizer.step()
 
-                print(f'[Train] Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}')
+                print(f'[Train] Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}, Learning Rate: {optimizer.param_groups[0]["lr"]}')
+                labeler.append(labels)
+            labeler = torch.cat(labeler, 0)
+            # print(labeler)
             
             # Validate the model
             accuracy, precision, recall, f1_score = TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
@@ -75,8 +84,9 @@ class TrainNeuralNetwork():
                 prev_f1_score = 1000
                 isStop -= 1
                 if isStop == 0:
-                    print('Early stopping...')
-                    break
+                    pass
+                    # print('Early stopping...')
+                    # break
             else:
                 prev_f1_score = f1_score
 
@@ -101,53 +111,58 @@ class TrainNeuralNetwork():
         validation_features_2d = validation_features.reshape(validation_features.shape[0], -1)
         validation_labels = np.concatenate(validation_labels, axis=0)
 
-        model.fit(np.concatenate((features_2d, validation_features_2d)), np.concatenate((labels, validation_labels)))
+        # weight
+        sample_weights = np.where(np.concatenate((labels, validation_labels)) == 1, 0.81, 0.19)
+        model.fit(np.concatenate((features_2d, validation_features_2d)), np.concatenate((labels, validation_labels)), sample_weight=sample_weights)
         
         # Best: 0.801709 using {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200}
 
     def plotTrainingInfo(self):
-        plt.title('Loss by epoch')
+        plt.title(self.config['model_name'] + ' loss by epoch')
         plt.plot(self.lossByEpoch, label='Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
 
-        if self.config['save_plot_train']:
-            plt.savefig(SAVED_PLOT_PATH + '_' + self.config['model_name'] + '_loss_by_epoch.svg')
-        if self.config['show_plot_train']:
+        if self.config['save_plot']:
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_loss_by_epoch.png')
+        if self.config['show_plot']:
             plt.show()
         else:
             plt.close()
 
         plt.figure(figsize=(10, 8), dpi=150)
 
+        plt.figure(figsize=(10, 8), dpi=150)
+        plt.suptitle(self.config['model_name'] + ' Metrics by epoch')
+
         plt.subplot(2, 2, 1)
-        plt.title('Accuracy by epoch')
+        plt.title('Accuracy')
         plt.plot(self.accuracyByEpoch, label='Accuracy')
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy')
 
         plt.subplot(2, 2, 2)
-        plt.title('Recall by epoch')
+        plt.title('Recall')
         plt.plot(self.recallByEpoch, label='Recall')
         plt.xlabel('Epoch')
         plt.ylabel('Recall')
 
         plt.subplot(2, 2, 3)
-        plt.title('Precision by epoch')
+        plt.title('Precision')
         plt.plot(self.precisionByEpoch, label='Precision')
         plt.xlabel('Epoch')
         plt.ylabel('Precision')
 
         plt.subplot(2, 2, 4)
-        plt.title('F1 Score by epoch')
+        plt.title('F1 Score')
         plt.plot(self.f1ScoreByEpoch, label='F1 Score')
         plt.xlabel('Epoch')
         plt.ylabel('F1 Score')
 
         plt.tight_layout()
-        if self.config['save_plot_train']:
-            plt.savefig(SAVED_PLOT_PATH + '_' + self.config['model_name'] + '_metrics_by_epoch.svg')
-        if self.config['show_plot_train']:
+        if self.config['save_plot']:
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_metrics_by_epoch.png')
+        if self.config['show_plot']:
             plt.show()
         else:
             plt.close()
