@@ -1,5 +1,5 @@
 # Local data location
-data/dataset
+data/dataset/*
 data/results
 models/saved_models/*
 

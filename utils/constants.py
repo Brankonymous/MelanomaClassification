@@ -4,11 +4,11 @@ import torch
 DEVICE_NAME = 'cuda' if torch.cuda.is_available() else 'cpu'
 DEVICE = torch.device(DEVICE_NAME)
 
-TRAIN_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Training_Data'
-TEST_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Test_Data'
-TRAIN_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Training_GroundTruth.csv'
-TEST_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3/ISBI2016_ISIC_Part3_Test_GroundTruth.csv'
-VALIDATION_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3/validation.csv'
+TRAIN_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3_Training_Data'
+TEST_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3_Test_Data'
+TRAIN_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Training_GroundTruth.csv'
+TEST_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Test_GroundTruth.csv'
+VALIDATION_CSV_NAME = 'data/dataset/validation.csv'
 
 SAVED_MODEL_PATH = 'models/saved_models/'
 SAVED_RESULTS_PATH = 'data/results/'
