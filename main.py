@@ -1,4 +1,5 @@
 import argparse
+import sys
 from train import TrainNeuralNetwork
 from test import TestNeuralNetwork
 from utils.constants import *
@@ -31,11 +32,25 @@ if __name__ == '__main__':
     parser.add_argument('--save_model', help='Save model during training', default=True)
     parser.add_argument('--show_plot', help='Show plots', default=False)
     parser.add_argument('--save_plot', help='Save plots to results/ folder', default=True)
+    parser.add_argument('--log', help='Log results', default=False)
 
     args = parser.parse_args()
     config = dict()
     for arg in vars(args):
         config[arg] = getattr(args, arg)
+    
+    if config['log']:
+        log_file = open("results/" + config['model_name'] + ".log", "w")
+        sys.stdout = log_file
+        print("Config: ")
+        print(config)
+
+        print("\nHyperparameters: ")
+        import utils.constants
+        for name, value in vars(utils.constants).items():
+            if not name.startswith('__') and not callable(value) and not isinstance(value, type(sys)):
+                print(name, value)
+        print("\n")
     
     if config['type'] == 'TRAIN' or config['type'] == 'TRAIN_AND_TEST':
         if config['model_name'] == 'VGG':
@@ -52,3 +67,5 @@ if __name__ == '__main__':
             test(config) 
         else:
             raise ValueError('Please choose a valid model name: VGG or XGBoost')
+        
+    log_file.close()

@@ -1,0 +1,47 @@
+Config: 
+{'type': 'TRAIN_AND_TEST', 'model_name': 'XGBoost', 'save_model': True, 'show_plot': False, 'save_plot': True, 'log': 'TRUE'}
+
+Hyperparameters: 
+DEVICE_NAME cuda
+DEVICE cuda
+TRAIN_DATASET_PATH data/dataset/ISBI2016_ISIC_Part3_Training_Data
+TEST_DATASET_PATH data/dataset/ISBI2016_ISIC_Part3_Test_Data
+TRAIN_CSV_NAME data/dataset/ISBI2016_ISIC_Part3_Training_GroundTruth.csv
+TEST_CSV_NAME data/dataset/ISBI2016_ISIC_Part3_Test_GroundTruth.csv
+VALIDATION_CSV_NAME data/dataset/validation.csv
+SAVED_MODEL_PATH models/
+SAVED_PLOT_PATH results/
+MEAN_PARAMS [0.485, 0.456, 0.406]
+STD_PARAMS [0.229, 0.224, 0.225]
+RESIZE_PARAMS (128, 128)
+NUM_WORKERS 0
+BATCH_SIZE 256
+EPOCHS 12
+LEARNING_RATE 0.0001
+LR_STEP_SIZE 10
+WEIGHT_DECAY 0
+NUM_CLASSES 2
+CLASS_NAMES ['Benign', 'Malignant']
+
+
+[Train] Starting...
+Batch: 0, Index: 0
+Batch: 1, Index: 256
+Batch: 2, Index: 512
+Batch: 3, Index: 768
+[Train] Time taken:  0:00:41.699179
+[Test] Starting...
+Accuracy: 0.64 
+ Precision: 0.72 
+ Recall: 0.64 
+ F1 Score: 0.67 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.83      0.69      0.76       303
+   Malignant       0.26      0.43      0.32        75
+
+    accuracy                           0.64       378
+   macro avg       0.54      0.56      0.54       378
+weighted avg       0.72      0.64      0.67       378
+
+[Test] Time taken:  0:00:08.656439

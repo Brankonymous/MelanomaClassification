@@ -10,8 +10,7 @@ TRAIN_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Training_GroundTruth.csv'
 TEST_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Test_GroundTruth.csv'
 VALIDATION_CSV_NAME = 'data/dataset/validation.csv'
 
-SAVED_MODEL_PATH = 'models/saved_models/'
-SAVED_RESULTS_PATH = 'data/results/'
+SAVED_MODEL_PATH = 'models/'
 SAVED_PLOT_PATH = 'results/'
 
 # Dataset processing
@@ -22,15 +21,14 @@ RESIZE_PARAMS = (128, 128)
 # Model constants
 NUM_WORKERS = 0
 BATCH_SIZE = 256
-EPOCHS = 30
+EPOCHS = 12
 LEARNING_RATE = 1e-4
-LR_STEP_SIZE = 15
+LR_STEP_SIZE = 10
 WEIGHT_DECAY = 0
 
 # DATASET SPECIFIC
 NUM_CLASSES = 2
 CLASS_NAMES = ['Benign', 'Malignant']
-K_FOLD = 1
 
 class ModelType(enum.Enum):
     TRAIN_AND_TEST = 0

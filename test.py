@@ -62,10 +62,10 @@ class TestNeuralNetwork():
         report = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1])
 
         print(
-            'Accuracy: {:.2f}%'.format(accuracy * 100), '\n', 
-            'Precision: {:.2f}%'.format(precision * 100), '\n', 
-            'Recall: {:.2f}%'.format(recall * 100), '\n', 
-            'F1 Score: {:.2f}%'.format(f1_score * 100), '\n', 
+            'Accuracy: {:.2f}'.format(accuracy), '\n', 
+            'Precision: {:.2f}'.format(precision), '\n', 
+            'Recall: {:.2f}'.format(recall), '\n', 
+            'F1 Score: {:.2f}'.format(f1_score), '\n', 
             'Report: ', report
         )
 
