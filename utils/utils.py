@@ -5,19 +5,32 @@ from torchvision.transforms import Normalize, Resize, ToTensor, RandomRotation, 
 from torchvision import transforms
 
 def loadDataset(isTrain=True, modelName='VGG'):
-    validationTransform = transforms.Compose([
-        ToTensor(),
-        Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
-        Resize(RESIZE_PARAMS)
-    ])
-    trainAndTestTransform = transforms.Compose([
-        ToTensor(),
-        Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
-        Resize(RESIZE_PARAMS),
-        RandomRotation(degrees=90),
-        RandomHorizontalFlip(p=0.5),
-        RandomVerticalFlip(p=0.5)
-    ])
+    if modelName == 'VGG':
+        validationTransform = transforms.Compose([
+            ToTensor(),
+            Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
+            Resize(RESIZE_PARAMS)
+        ])
+        trainAndTestTransform = transforms.Compose([
+            ToTensor(),
+            Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
+            Resize(RESIZE_PARAMS),
+            RandomRotation(degrees=90),
+            RandomHorizontalFlip(p=0.5),
+            RandomVerticalFlip(p=0.5)
+        ])
+    else:
+        validationTransform = transforms.Compose([
+            ToTensor(),
+            Resize(RESIZE_PARAMS)
+        ])
+        trainAndTestTransform = transforms.Compose([
+            ToTensor(),
+            Resize(RESIZE_PARAMS),
+            RandomRotation(degrees=90),
+            RandomHorizontalFlip(p=0.5),
+            RandomVerticalFlip(p=0.5)
+        ])
 
     targetTransform = transforms.Compose([
         LabelToBinary()

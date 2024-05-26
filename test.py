@@ -84,7 +84,6 @@ class TestNeuralNetwork():
         ax.set_ylim(0, 1)
         ax.set_ylabel('Ocene')
         ax.set_title('Performanse modela ' + self.config['model_name'])
-        ax.legend()
         
         if self.config['save_plot']:
             plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_rezultati.png')
