@@ -29,6 +29,7 @@ WEIGHT_DECAY = 0
 # DATASET SPECIFIC
 NUM_CLASSES = 2
 CLASS_NAMES = ['Benign', 'Malignant']
+CLASS_NAMES_SERBIAN = ['Benigni tumor', 'Maligni tumor']
 
 class ModelType(enum.Enum):
     TRAIN_AND_TEST = 0

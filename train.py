@@ -118,13 +118,13 @@ class TrainNeuralNetwork():
         # Best: 0.801709 using {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200}
 
     def plotTrainingInfo(self):
-        plt.title(self.config['model_name'] + ' loss by epoch')
-        plt.plot(self.lossByEpoch, label='Loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
+        plt.title('Gubitak po epohi za ' + self.config['model_name'])
+        plt.plot(self.lossByEpoch, label='Gubitak')
+        plt.xlabel('Epoha')
+        plt.ylabel('Gubitak')
 
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_loss_by_epoch.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_gubitak_po_epohi.png')
         if self.config['show_plot']:
             plt.show()
         else:
@@ -133,35 +133,35 @@ class TrainNeuralNetwork():
         plt.figure(figsize=(10, 8), dpi=150)
 
         plt.figure(figsize=(10, 8), dpi=150)
-        plt.suptitle(self.config['model_name'] + ' Metrics by epoch')
+        plt.suptitle('Metrike po epohi za ' + self.config['model_name'])
 
         plt.subplot(2, 2, 1)
-        plt.title('Accuracy')
-        plt.plot(self.accuracyByEpoch, label='Accuracy')
-        plt.xlabel('Epoch')
-        plt.ylabel('Accuracy')
+        plt.title('Tačnost')
+        plt.plot(self.accuracyByEpoch, label='Tačnost')
+        plt.xlabel('Epoha')
+        plt.ylabel('Tačnost')
 
         plt.subplot(2, 2, 2)
-        plt.title('Recall')
-        plt.plot(self.recallByEpoch, label='Recall')
-        plt.xlabel('Epoch')
-        plt.ylabel('Recall')
+        plt.title('Odziv')
+        plt.plot(self.recallByEpoch, label='Odziv')
+        plt.xlabel('Epoha')
+        plt.ylabel('Odziv')
 
         plt.subplot(2, 2, 3)
-        plt.title('Precision')
-        plt.plot(self.precisionByEpoch, label='Precision')
-        plt.xlabel('Epoch')
-        plt.ylabel('Precision')
+        plt.title('Preciznost')
+        plt.plot(self.precisionByEpoch, label='Preciznost')
+        plt.xlabel('Epoha')
+        plt.ylabel('Preciznost')
 
         plt.subplot(2, 2, 4)
-        plt.title('F1 Score')
-        plt.plot(self.f1ScoreByEpoch, label='F1 Score')
-        plt.xlabel('Epoch')
-        plt.ylabel('F1 Score')
+        plt.title('F1 mera')
+        plt.plot(self.f1ScoreByEpoch, label='F1 mera')
+        plt.xlabel('Epoha')
+        plt.ylabel('F1 mera')
 
         plt.tight_layout()
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_metrics_by_epoch.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_metrike_po_epohi.png')
         if self.config['show_plot']:
             plt.show()
         else:

@@ -22,6 +22,7 @@ LR_STEP_SIZE 10
 WEIGHT_DECAY 0
 NUM_CLASSES 2
 CLASS_NAMES ['Benign', 'Malignant']
+CLASS_NAMES_SERBIAN ['Benigni tumor', 'Maligni tumor']
 
 
 [Train] Starting...
@@ -29,19 +30,19 @@ Batch: 0, Index: 0
 Batch: 1, Index: 256
 Batch: 2, Index: 512
 Batch: 3, Index: 768
-[Train] Time taken:  0:00:41.699179
+[Train] Time taken:  0:00:34.393294
 [Test] Starting...
-Accuracy: 0.64 
- Precision: 0.72 
- Recall: 0.64 
- F1 Score: 0.67 
+Accuracy: 0.66 
+ Precision: 0.74 
+ Recall: 0.66 
+ F1 Score: 0.69 
  Report:                precision    recall  f1-score   support
 
-      Benign       0.83      0.69      0.76       303
-   Malignant       0.26      0.43      0.32        75
+      Benign       0.85      0.70      0.77       303
+   Malignant       0.29      0.49      0.36        75
 
-    accuracy                           0.64       378
-   macro avg       0.54      0.56      0.54       378
-weighted avg       0.72      0.64      0.67       378
+    accuracy                           0.66       378
+   macro avg       0.57      0.60      0.57       378
+weighted avg       0.74      0.66      0.69       378
 
-[Test] Time taken:  0:00:08.656439
+[Test] Time taken:  0:00:08.628907

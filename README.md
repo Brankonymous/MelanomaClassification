@@ -1,4 +1,4 @@
-# Klasifikacija raka
+# Klasifikacija tumora
 
 ## Kako pokrenuti repozitorijum
 Da biste pokrenuli repozitorijum, neophodno je pratiti sledeće korake:

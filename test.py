@@ -75,37 +75,37 @@ class TestNeuralNetwork():
         return accuracy, precision, recall, f1_score
 
     def plotResults(self, accuracy, precision, recall, f1_score, all_labels, all_predictions):
-        # Plot results as a bar chart
-        fig, ax = plt.subplots()
-        ax.bar('Accuracy', accuracy, label='Accuracy')
-        ax.bar('Precision', precision, label='Precision')
-        ax.bar('Recall', recall, label='Recall')
-        ax.bar('F1 Score', f1_score, label='F1 Score')
-
-        ax.set_ylabel('Scores')
-        ax.set_title(self.config['model_name'] + ' Model Performance')
+        # Prikaz performansi modela
+        fig, ax = plt.subplots(dpi=150)
+        ax.bar('Tačnost', accuracy, label='Tačnost')
+        ax.bar('Preciznost', precision, label='Preciznost')
+        ax.bar('Odziv', recall, label='Odziv')
+        ax.bar('F1 Mera', f1_score, label='F1 Mera')
+        ax.set_ylim(0, 1)
+        ax.set_ylabel('Ocene')
+        ax.set_title('Performanse modela ' + self.config['model_name'])
         ax.legend()
         
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_results.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_rezultati.png')
         if self.config['show_plot']:
             plt.show()
         else:
             plt.close()
 
-        # Plot confusion matrix
+        # Prikaz matrice konfuzije
         cm = confusion_matrix(all_labels, all_predictions)
-        ax = plt.subplot()
-        sns.heatmap(cm, annot=True, ax = ax, cmap='Blues', fmt='g')
+        fig, ax = plt.subplots(dpi=150)
+        sns.heatmap(cm, annot=True, ax=ax, cmap='Blues', fmt='g', cbar=False)
 
-        ax.set_xlabel('Predicted labels')
-        ax.set_ylabel('True labels')
-        ax.set_title(self.config['model_name'] + ' Confusion Matrix')
-        ax.xaxis.set_ticklabels(CLASS_NAMES)
-        ax.yaxis.set_ticklabels(CLASS_NAMES)
+        ax.set_xlabel('Predviđene klase')
+        ax.set_ylabel('Stvarne klase')
+        ax.set_title('Matrica konfuzije za model ' + self.config['model_name'])
+        ax.xaxis.set_ticklabels(CLASS_NAMES_SERBIAN)
+        ax.yaxis.set_ticklabels(CLASS_NAMES_SERBIAN)
 
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_confusion_matrix.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_matrica_konfuzije.png')
         if self.config['show_plot']:
             plt.show()
         else:
