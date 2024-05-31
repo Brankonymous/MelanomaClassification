@@ -58,7 +58,10 @@ Prilikom pokretanja programa, uneti argument komandne linije:
 <br>
 <b><i>--dataset_name HAM</i></b>
 
-<i>Upozorenje: Skup podataka zauzima 6GB slobodnog prostora i nema podršku za trening
+<i>Upozorenje: Skup podataka zauzima 6GB slobodnog prostora i nema podršku za trening</i>
+
+## Seminarski rad
+Seminarski rad na <b>srpskom</b> se može naći [ovde](documentation/seminarski%20rad.pdf)
 
 ## Informacije o autorima i mentoru
 
