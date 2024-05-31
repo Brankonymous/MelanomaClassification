@@ -31,10 +31,10 @@ class TestNeuralNetwork():
         self.testModel(model, TestLoader)
 
     def testModel(self, model, DataLoader):
-        # Evaluate the model
         all_predictions = []
         all_labels = []
 
+        # Evaluate the model
         if self.config['model_name'] == 'VGG':
             model.eval()
             with torch.no_grad():
@@ -52,9 +52,8 @@ class TestNeuralNetwork():
                 predictions = model.predict(features_2d)
                 all_predictions.extend(predictions)
                 all_labels.extend(labels.numpy())
-        # print(all_labels)
 
-        # Calculate accuracy and generate classification report
+        # Generate classification report
         accuracy = accuracy_score(all_labels, all_predictions)
         precision = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1], output_dict=True)['weighted avg']['precision']
         recall = classification_report(all_labels, all_predictions, target_names=CLASS_NAMES, labels=[0, 1], output_dict=True)['weighted avg']['recall']
@@ -75,7 +74,7 @@ class TestNeuralNetwork():
         return accuracy, precision, recall, f1_score
 
     def plotResults(self, accuracy, precision, recall, f1_score, all_labels, all_predictions):
-        # Prikaz performansi modela
+        # Plot model metrics
         fig, ax = plt.subplots(dpi=150)
         ax.bar('Tačnost', accuracy, label='Tačnost')
         ax.bar('Preciznost', precision, label='Preciznost')
@@ -92,7 +91,7 @@ class TestNeuralNetwork():
         else:
             plt.close()
 
-        # Prikaz matrice konfuzije
+        # Plot confusion matrix
         cm = confusion_matrix(all_labels, all_predictions)
         fig, ax = plt.subplots(dpi=150)
         sns.heatmap(cm, annot=True, ax=ax, cmap='Blues', fmt='g', cbar=False)

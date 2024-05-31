@@ -6,12 +6,15 @@ from torchvision.transforms import Normalize, Resize, ToTensor, RandomRotation, 
 from torchvision import transforms
 
 def loadDataset(isTrain=True, modelName='VGG', datasetName='ISIC'):
+    # Define transforms based on the selected model
     if modelName == 'VGG':
+        # Transforms for validation dataset
         validationTransform = transforms.Compose([
             ToTensor(),
             Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
             Resize(RESIZE_PARAMS)
         ])
+        # Transforms for train and test datasets
         trainAndTestTransform = transforms.Compose([
             ToTensor(),
             Normalize(mean=MEAN_PARAMS, std=STD_PARAMS),
@@ -20,11 +23,13 @@ def loadDataset(isTrain=True, modelName='VGG', datasetName='ISIC'):
             RandomHorizontalFlip(p=0.5),
             RandomVerticalFlip(p=0.5)
         ])
-    else:
+    elif modelName == 'XGBoost':
+        # Transforms for validation dataset
         validationTransform = transforms.Compose([
             ToTensor(),
             Resize(RESIZE_PARAMS)
         ])
+        # Transforms for train and test datasets
         trainAndTestTransform = transforms.Compose([
             ToTensor(),
             Resize(RESIZE_PARAMS),
@@ -33,37 +38,39 @@ def loadDataset(isTrain=True, modelName='VGG', datasetName='ISIC'):
             RandomVerticalFlip(p=0.5)
         ])
 
+    # Load dataset based on the selected dataset name
     if datasetName == 'ISIC':
+        # Define target transform for ISIC dataset
         targetTransform = transforms.Compose([
             IsicToBinary()
         ])
+        # Create validation dataset
         validationDataset = ISICDataset(
-            isTrain = isTrain,
-            isVal = True,
-            transform = validationTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
+            isTrain=isTrain,
+            isVal=True,
+            transform=validationTransform,
+            targetTransform=targetTransform,
+            modelName=modelName
         )
+        # Create train and test dataset
         trainAndTestDataset = ISICDataset(
-            isTrain = isTrain,
-            transform = trainAndTestTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
+            isTrain=isTrain,
+            transform=trainAndTestTransform,
+            targetTransform=targetTransform,
+            modelName=modelName
         )
 
         return trainAndTestDataset, validationDataset
-    else:
+    elif datasetName == 'HAM':
+        # Define target transform for HAM dataset
         targetTransform = transforms.Compose([
             HamToBinary()
         ])
-
+        # Create test dataset
         testDataset = HAMDataset(
-            transform = trainAndTestTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
+            transform=trainAndTestTransform,
+            targetTransform=targetTransform,
+            modelName=modelName
         )
 
         return testDataset, None
-    
-    
-    

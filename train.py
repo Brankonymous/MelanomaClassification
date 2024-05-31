@@ -21,20 +21,22 @@ class TrainNeuralNetwork():
         # Initialize dataset
         trainDataset, validationDataset = loadDataset(isTrain=True, modelName=self.config['model_name'], datasetName=self.config['dataset_name'])
 
-        # dataloader
+        # Generate DataLoader
         TrainDataLoader = torch.utils.data.DataLoader(trainDataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
         ValidationDataLoader = torch.utils.data.DataLoader(validationDataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
 
-        # Load VGG or XGBoost
+        # Load model and start training
         if self.config['model_name'] == 'VGG':
             model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg11_bn', pretrained=True).to(DEVICE)
             num_features = model.classifier[6].in_features
             model.classifier[6] = nn.Linear(num_features, NUM_CLASSES).to(DEVICE)
 
+            # Loss and optimizer
             weights = torch.tensor([0.19, 0.81], dtype=torch.float).to(DEVICE)
             loss = torch.nn.CrossEntropyLoss(weight=weights).to(DEVICE)
             optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
+            # Start training
             self.cnnTrainLoop(model, loss, optimizer, TrainDataLoader, ValidationDataLoader)
 
             if self.config['save_plot'] or self.config['show_plot']:
@@ -45,6 +47,8 @@ class TrainNeuralNetwork():
                 torch.save(model, SAVED_MODEL_PATH + self.config['model_name'] + '_model.pth')
         elif self.config['model_name'] == 'XGBoost':
             model = xgb.XGBClassifier(device=DEVICE_NAME, sample_type='weighted', learning_rate = 0.01, max_depth = 3, n_estimators = 200)
+            
+            # Start training
             self.xgbTrainLoop(model, TrainDataLoader, ValidationDataLoader)
 
             if self.config['save_model']:
@@ -53,6 +57,7 @@ class TrainNeuralNetwork():
             raise ValueError("Please choose either VGG or XGBoost")
 
     def cnnTrainLoop(self, model, loss, optimizer, TrainDataLoader, ValidationDataLoader):
+        # Train the VGG model
         prev_f1_score, isStop = 0, 3
         for epoch in range(EPOCHS):
             model.train()
@@ -69,7 +74,6 @@ class TrainNeuralNetwork():
                 print(f'[Train] Epoch: {epoch}, Batch: {i}, Index: {i*BATCH_SIZE}, Loss: {lossValue.item()}, Learning Rate: {optimizer.param_groups[0]["lr"]}')
                 labeler.append(labels)
             labeler = torch.cat(labeler, 0)
-            # print(labeler)
             
             # Validate the model
             accuracy, precision, recall, f1_score = TestNeuralNetwork(self.config).testModel(model, ValidationDataLoader)
@@ -85,19 +89,19 @@ class TrainNeuralNetwork():
                 isStop -= 1
                 if isStop == 0:
                     pass
-                    # print('Early stopping...')
-                    # break
             else:
                 prev_f1_score = f1_score
 
 
     def xgbTrainLoop(self, model, DataLoader, ValidationDataLoader):
+        # Train the XGBoost model
         features, all_labels = [], []
         for i, (images, batch_labels) in enumerate(DataLoader):
             print(f'Batch: {i}, Index: {i*BATCH_SIZE}')
             features.append(images)
             all_labels.append(batch_labels.numpy().tolist())
         
+        # Flatten the features
         features = np.concatenate(features, axis=0)
         features_2d = features.reshape(features.shape[0], -1)
         labels = np.concatenate(all_labels, axis=0)
@@ -111,13 +115,15 @@ class TrainNeuralNetwork():
         validation_features_2d = validation_features.reshape(validation_features.shape[0], -1)
         validation_labels = np.concatenate(validation_labels, axis=0)
 
-        # weight
+        # Add sample weights
         sample_weights = np.where(np.concatenate((labels, validation_labels)) == 1, 0.81, 0.19)
+        
+        # Train the model
         model.fit(np.concatenate((features_2d, validation_features_2d)), np.concatenate((labels, validation_labels)), sample_weight=sample_weights)
         
-        # Best: 0.801709 using {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200}
 
     def plotTrainingInfo(self):
+        # Plot loss
         plt.title('Gubitak po epohi za ' + self.config['model_name'])
         plt.plot(self.lossByEpoch, label='Gubitak')
         plt.xlabel('Epoha')
@@ -130,8 +136,7 @@ class TrainNeuralNetwork():
         else:
             plt.close()
 
-        plt.figure(figsize=(10, 8), dpi=150)
-
+        # Plot evaluation metrics by epoch
         plt.figure(figsize=(10, 8), dpi=150)
         plt.suptitle('Metrike po epohi za ' + self.config['model_name'])
 
