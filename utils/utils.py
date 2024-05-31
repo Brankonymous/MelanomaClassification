@@ -1,10 +1,11 @@
 from .constants import *
-from data.melanomaDataset import MelanomaDataset
-from data.customTransforms import LabelToBinary
+from data.isicDataset import ISICDataset
+from data.hamDataset import HAMDataset
+from data.customTransforms import IsicToBinary, HamToBinary
 from torchvision.transforms import Normalize, Resize, ToTensor, RandomRotation, RandomHorizontalFlip, RandomVerticalFlip
 from torchvision import transforms
 
-def loadDataset(isTrain=True, modelName='VGG'):
+def loadDataset(isTrain=True, modelName='VGG', datasetName='ISIC'):
     if modelName == 'VGG':
         validationTransform = transforms.Compose([
             ToTensor(),
@@ -32,39 +33,37 @@ def loadDataset(isTrain=True, modelName='VGG'):
             RandomVerticalFlip(p=0.5)
         ])
 
-    targetTransform = transforms.Compose([
-        LabelToBinary()
-    ])
+    if datasetName == 'ISIC':
+        targetTransform = transforms.Compose([
+            IsicToBinary()
+        ])
+        validationDataset = ISICDataset(
+            isTrain = isTrain,
+            isVal = True,
+            transform = validationTransform,
+            targetTransform = targetTransform,
+            modelName = modelName
+        )
+        trainAndTestDataset = ISICDataset(
+            isTrain = isTrain,
+            transform = trainAndTestTransform,
+            targetTransform = targetTransform,
+            modelName = modelName
+        )
 
-    if modelName == 'VGG':
-        validationDataset = MelanomaDataset(
-            isTrain = isTrain,
-            isVal = True,
-            transform = validationTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
-        )
-        trainAndTestDataset = MelanomaDataset(
-            isTrain = isTrain,
-            transform = trainAndTestTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
-        )
-    elif modelName == 'XGBoost':
-        validationDataset = MelanomaDataset(
-            isTrain = isTrain,
-            isVal = True,
-            transform = validationTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
-        )
-        trainAndTestDataset = MelanomaDataset(
-            isTrain = isTrain, 
-            transform = trainAndTestTransform,
-            targetTransform = targetTransform,
-            modelName = modelName
-        )
+        return trainAndTestDataset, validationDataset
     else:
-        raise ValueError('Please choose either VGG or XGBoost')
+        targetTransform = transforms.Compose([
+            HamToBinary()
+        ])
+
+        testDataset = HAMDataset(
+            transform = trainAndTestTransform,
+            targetTransform = targetTransform,
+            modelName = modelName
+        )
+
+        return testDataset, None
     
-    return trainAndTestDataset, validationDataset
+    
+    

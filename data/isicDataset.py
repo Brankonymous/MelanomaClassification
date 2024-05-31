@@ -2,13 +2,12 @@ from torch.utils.data import Dataset
 import pandas as pd
 from PIL import Image
 import torch
-from torchvision.transforms import RandomRotation, RandomHorizontalFlip, RandomVerticalFlip
 import torchvision.models as models
 from utils.constants import *
 from data.customTransforms import *
 from random import random
 
-class MelanomaDataset(Dataset):
+class ISICDataset(Dataset):
     def __init__(self, isTrain=True, isVal=False, transform=None, targetTransform=None, modelName='VGG'):
         if not isTrain and isVal:
             return
@@ -21,17 +20,10 @@ class MelanomaDataset(Dataset):
         self._targetTransform = targetTransform
         self._modelName = modelName
 
-        self._vgg = models.vgg11_bn(pretrained=True)
-        self._vgg.eval() # no need for further training
-
         if isVal:
             self.processValidationDataset()
         elif isTrain:
             self.processTrainDataset()
-
-        self._rotateChance = [random() for i in range(len(self._datasetCSV))]
-        self._hFlipChance = [random() for i in range(len(self._datasetCSV))]
-        self._vFlipChance = [random() for i in range(len(self._datasetCSV))]
 
     def __len__(self):
         return len(self._datasetCSV)

@@ -28,7 +28,8 @@ if __name__ == '__main__':
 
     # Common params
     parser.add_argument('--type', choices=[m.name for m in ModelType], type=str, help='Input TRAIN, TEST or TRAIN_AND_TEST for type of classification', default=ModelType.TRAIN_AND_TEST.name)
-    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.XGBoost.name)
+    parser.add_argument('--model_name', choices=[m.name for m in SupportedModels], type=str, help='Neural network (model) to use', default=SupportedModels.VGG.name)
+    parser.add_argument('--dataset_name', choices=[m.name for m in SupportedDataset], type=str, help='Dataset to use', default=SupportedDataset.ISIC.name)
     parser.add_argument('--save_model', help='Save model during training', default=True)
     parser.add_argument('--show_plot', help='Show plots', default=False)
     parser.add_argument('--save_plot', help='Save plots to results/ folder', default=True)
@@ -40,7 +41,7 @@ if __name__ == '__main__':
         config[arg] = getattr(args, arg)
     
     if config['log']:
-        log_file = open("results/" + config['model_name'] + ".log", "w")
+        log_file = open("results/" + config['model_name'] + '_' + config['dataset_name'] + ".log", "w")
         sys.stdout = log_file
         print("Config: ")
         print(config)

@@ -14,7 +14,7 @@ class TestNeuralNetwork():
 
     def startTest(self):
         # Initialize dataset
-        TestDataset, _ = loadDataset(isTrain=False, modelName=self.config['model_name'])
+        TestDataset, _ = loadDataset(isTrain=False, modelName=self.config['model_name'], datasetName=self.config['dataset_name'])
 
         # Generate DataLoader
         TestLoader = torch.utils.data.DataLoader(TestDataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -86,7 +86,7 @@ class TestNeuralNetwork():
         ax.set_title('Performanse modela ' + self.config['model_name'])
         
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_rezultati.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_' + self.config['dataset_name'] + '_rezultati.png')
         if self.config['show_plot']:
             plt.show()
         else:
@@ -104,7 +104,7 @@ class TestNeuralNetwork():
         ax.yaxis.set_ticklabels(CLASS_NAMES_SERBIAN)
 
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_matrica_konfuzije.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_' + self.config['dataset_name'] + '_matrica_konfuzije.png')
         if self.config['show_plot']:
             plt.show()
         else:

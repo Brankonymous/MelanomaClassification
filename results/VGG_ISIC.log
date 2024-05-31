@@ -1,0 +1,253 @@
+Config: 
+{'type': 'TRAIN_AND_TEST', 'model_name': 'VGG', 'dataset_name': 'ISIC', 'save_model': True, 'show_plot': False, 'save_plot': True, 'log': True}
+
+Hyperparameters: 
+DEVICE_NAME cuda
+DEVICE cuda
+TRAIN_DATASET_PATH data/dataset/ISBI2016_ISIC_Part3_Training_Data
+TEST_DATASET_PATH data/dataset/ISBI2016_ISIC_Part3_Test_Data
+TRAIN_CSV_NAME data/dataset/ISBI2016_ISIC_Part3_Training_GroundTruth.csv
+TEST_CSV_NAME data/dataset/ISBI2016_ISIC_Part3_Test_GroundTruth.csv
+VALIDATION_CSV_NAME data/dataset/validation.csv
+HAM10000_DATASET_PATH data/dataset/archive/
+HAM10000_CSV_NAME data/dataset/archive/HAM10000_metadata.csv
+HAM10000_IMAGES_1_PATH HAM10000_images_part_1/
+HAM10000_IMAGES_2_PATH HAM10000_images_part_2/
+SAVED_MODEL_PATH models/
+SAVED_PLOT_PATH results/
+MEAN_PARAMS [0.485, 0.456, 0.406]
+STD_PARAMS [0.229, 0.224, 0.225]
+RESIZE_PARAMS (128, 128)
+NUM_WORKERS 0
+BATCH_SIZE 256
+EPOCHS 12
+LEARNING_RATE 0.0001
+LR_STEP_SIZE 10
+WEIGHT_DECAY 0
+NUM_CLASSES 2
+CLASS_NAMES ['Benign', 'Malignant']
+CLASS_NAMES_SERBIAN ['Benigni tumor', 'Maligni tumor']
+
+
+[Train] Starting...
+[Train] Epoch: 0, Batch: 0, Index: 0, Loss: 0.7171317934989929, Learning Rate: 0.0001
+[Train] Epoch: 0, Batch: 1, Index: 256, Loss: 0.6789271831512451, Learning Rate: 0.0001
+[Train] Epoch: 0, Batch: 2, Index: 512, Loss: 0.6395261287689209, Learning Rate: 0.0001
+[Train] Epoch: 0, Batch: 3, Index: 768, Loss: 0.6505354642868042, Learning Rate: 0.0001
+Accuracy: 0.81 
+ Precision: 0.78 
+ Recall: 0.81 
+ F1 Score: 0.78 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.84      0.95      0.89        73
+   Malignant       0.50      0.24      0.32        17
+
+    accuracy                           0.81        90
+   macro avg       0.67      0.59      0.61        90
+weighted avg       0.78      0.81      0.78        90
+
+[Train] Epoch: 1, Batch: 0, Index: 0, Loss: 0.5878686308860779, Learning Rate: 0.0001
+[Train] Epoch: 1, Batch: 1, Index: 256, Loss: 0.5283620357513428, Learning Rate: 0.0001
+[Train] Epoch: 1, Batch: 2, Index: 512, Loss: 0.49368467926979065, Learning Rate: 0.0001
+[Train] Epoch: 1, Batch: 3, Index: 768, Loss: 0.6133596301078796, Learning Rate: 0.0001
+Accuracy: 0.70 
+ Precision: 0.79 
+ Recall: 0.70 
+ F1 Score: 0.73 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.90      0.71      0.79        73
+   Malignant       0.34      0.65      0.45        17
+
+    accuracy                           0.70        90
+   macro avg       0.62      0.68      0.62        90
+weighted avg       0.79      0.70      0.73        90
+
+[Train] Epoch: 2, Batch: 0, Index: 0, Loss: 0.4772539734840393, Learning Rate: 0.0001
+[Train] Epoch: 2, Batch: 1, Index: 256, Loss: 0.5301762819290161, Learning Rate: 0.0001
+[Train] Epoch: 2, Batch: 2, Index: 512, Loss: 0.47997570037841797, Learning Rate: 0.0001
+[Train] Epoch: 2, Batch: 3, Index: 768, Loss: 0.4488888382911682, Learning Rate: 0.0001
+Accuracy: 0.81 
+ Precision: 0.82 
+ Recall: 0.81 
+ F1 Score: 0.81 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.89      0.88      0.88        73
+   Malignant       0.50      0.53      0.51        17
+
+    accuracy                           0.81        90
+   macro avg       0.69      0.70      0.70        90
+weighted avg       0.82      0.81      0.81        90
+
+[Train] Epoch: 3, Batch: 0, Index: 0, Loss: 0.4864499270915985, Learning Rate: 0.0001
+[Train] Epoch: 3, Batch: 1, Index: 256, Loss: 0.4350440502166748, Learning Rate: 0.0001
+[Train] Epoch: 3, Batch: 2, Index: 512, Loss: 0.48230284452438354, Learning Rate: 0.0001
+[Train] Epoch: 3, Batch: 3, Index: 768, Loss: 0.36072883009910583, Learning Rate: 0.0001
+Accuracy: 0.78 
+ Precision: 0.84 
+ Recall: 0.78 
+ F1 Score: 0.80 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.93      0.78      0.85        73
+   Malignant       0.45      0.76      0.57        17
+
+    accuracy                           0.78        90
+   macro avg       0.69      0.77      0.71        90
+weighted avg       0.84      0.78      0.80        90
+
+[Train] Epoch: 4, Batch: 0, Index: 0, Loss: 0.4765785336494446, Learning Rate: 0.0001
+[Train] Epoch: 4, Batch: 1, Index: 256, Loss: 0.4073374569416046, Learning Rate: 0.0001
+[Train] Epoch: 4, Batch: 2, Index: 512, Loss: 0.3979882597923279, Learning Rate: 0.0001
+[Train] Epoch: 4, Batch: 3, Index: 768, Loss: 0.3456053137779236, Learning Rate: 0.0001
+Accuracy: 0.78 
+ Precision: 0.82 
+ Recall: 0.78 
+ F1 Score: 0.79 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.91      0.81      0.86        73
+   Malignant       0.44      0.65      0.52        17
+
+    accuracy                           0.78        90
+   macro avg       0.67      0.73      0.69        90
+weighted avg       0.82      0.78      0.79        90
+
+[Train] Epoch: 5, Batch: 0, Index: 0, Loss: 0.4103136658668518, Learning Rate: 0.0001
+[Train] Epoch: 5, Batch: 1, Index: 256, Loss: 0.4069955050945282, Learning Rate: 0.0001
+[Train] Epoch: 5, Batch: 2, Index: 512, Loss: 0.345785528421402, Learning Rate: 0.0001
+[Train] Epoch: 5, Batch: 3, Index: 768, Loss: 0.3639354705810547, Learning Rate: 0.0001
+Accuracy: 0.87 
+ Precision: 0.87 
+ Recall: 0.87 
+ F1 Score: 0.87 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.92      0.92      0.92        73
+   Malignant       0.65      0.65      0.65        17
+
+    accuracy                           0.87        90
+   macro avg       0.78      0.78      0.78        90
+weighted avg       0.87      0.87      0.87        90
+
+[Train] Epoch: 6, Batch: 0, Index: 0, Loss: 0.3615610599517822, Learning Rate: 0.0001
+[Train] Epoch: 6, Batch: 1, Index: 256, Loss: 0.32963475584983826, Learning Rate: 0.0001
+[Train] Epoch: 6, Batch: 2, Index: 512, Loss: 0.38253334164619446, Learning Rate: 0.0001
+[Train] Epoch: 6, Batch: 3, Index: 768, Loss: 0.41216012835502625, Learning Rate: 0.0001
+Accuracy: 0.86 
+ Precision: 0.88 
+ Recall: 0.86 
+ F1 Score: 0.86 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.94      0.88      0.91        73
+   Malignant       0.59      0.76      0.67        17
+
+    accuracy                           0.86        90
+   macro avg       0.77      0.82      0.79        90
+weighted avg       0.88      0.86      0.86        90
+
+[Train] Epoch: 7, Batch: 0, Index: 0, Loss: 0.3512977957725525, Learning Rate: 0.0001
+[Train] Epoch: 7, Batch: 1, Index: 256, Loss: 0.3871878385543823, Learning Rate: 0.0001
+[Train] Epoch: 7, Batch: 2, Index: 512, Loss: 0.2680501341819763, Learning Rate: 0.0001
+[Train] Epoch: 7, Batch: 3, Index: 768, Loss: 0.29141685366630554, Learning Rate: 0.0001
+Accuracy: 0.83 
+ Precision: 0.84 
+ Recall: 0.83 
+ F1 Score: 0.84 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.90      0.89      0.90        73
+   Malignant       0.56      0.59      0.57        17
+
+    accuracy                           0.83        90
+   macro avg       0.73      0.74      0.73        90
+weighted avg       0.84      0.83      0.84        90
+
+[Train] Epoch: 8, Batch: 0, Index: 0, Loss: 0.3340423107147217, Learning Rate: 0.0001
+[Train] Epoch: 8, Batch: 1, Index: 256, Loss: 0.2767118811607361, Learning Rate: 0.0001
+[Train] Epoch: 8, Batch: 2, Index: 512, Loss: 0.29821038246154785, Learning Rate: 0.0001
+[Train] Epoch: 8, Batch: 3, Index: 768, Loss: 0.3030238747596741, Learning Rate: 0.0001
+Accuracy: 0.84 
+ Precision: 0.87 
+ Recall: 0.84 
+ F1 Score: 0.85 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.94      0.86      0.90        73
+   Malignant       0.57      0.76      0.65        17
+
+    accuracy                           0.84        90
+   macro avg       0.75      0.81      0.78        90
+weighted avg       0.87      0.84      0.85        90
+
+[Train] Epoch: 9, Batch: 0, Index: 0, Loss: 0.2657272517681122, Learning Rate: 0.0001
+[Train] Epoch: 9, Batch: 1, Index: 256, Loss: 0.30208611488342285, Learning Rate: 0.0001
+[Train] Epoch: 9, Batch: 2, Index: 512, Loss: 0.21201631426811218, Learning Rate: 0.0001
+[Train] Epoch: 9, Batch: 3, Index: 768, Loss: 0.28606805205345154, Learning Rate: 0.0001
+Accuracy: 0.88 
+ Precision: 0.89 
+ Recall: 0.88 
+ F1 Score: 0.88 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.94      0.90      0.92        73
+   Malignant       0.65      0.76      0.70        17
+
+    accuracy                           0.88        90
+   macro avg       0.80      0.83      0.81        90
+weighted avg       0.89      0.88      0.88        90
+
+[Train] Epoch: 10, Batch: 0, Index: 0, Loss: 0.2410711795091629, Learning Rate: 0.0001
+[Train] Epoch: 10, Batch: 1, Index: 256, Loss: 0.21716895699501038, Learning Rate: 0.0001
+[Train] Epoch: 10, Batch: 2, Index: 512, Loss: 0.29680973291397095, Learning Rate: 0.0001
+[Train] Epoch: 10, Batch: 3, Index: 768, Loss: 0.29221561551094055, Learning Rate: 0.0001
+Accuracy: 0.91 
+ Precision: 0.91 
+ Recall: 0.91 
+ F1 Score: 0.91 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.95      0.95      0.95        73
+   Malignant       0.76      0.76      0.76        17
+
+    accuracy                           0.91        90
+   macro avg       0.85      0.85      0.85        90
+weighted avg       0.91      0.91      0.91        90
+
+[Train] Epoch: 11, Batch: 0, Index: 0, Loss: 0.21766634285449982, Learning Rate: 0.0001
+[Train] Epoch: 11, Batch: 1, Index: 256, Loss: 0.24634091556072235, Learning Rate: 0.0001
+[Train] Epoch: 11, Batch: 2, Index: 512, Loss: 0.24827063083648682, Learning Rate: 0.0001
+[Train] Epoch: 11, Batch: 3, Index: 768, Loss: 0.22213444113731384, Learning Rate: 0.0001
+Accuracy: 0.93 
+ Precision: 0.93 
+ Recall: 0.93 
+ F1 Score: 0.93 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.95      0.97      0.96        73
+   Malignant       0.87      0.76      0.81        17
+
+    accuracy                           0.93        90
+   macro avg       0.91      0.87      0.89        90
+weighted avg       0.93      0.93      0.93        90
+
+Plotting training info...
+[Train] Time taken:  0:05:00.374149
+[Test] Starting...
+Accuracy: 0.79 
+ Precision: 0.79 
+ Recall: 0.79 
+ F1 Score: 0.79 
+ Report:                precision    recall  f1-score   support
+
+      Benign       0.87      0.87      0.87       303
+   Malignant       0.47      0.47      0.47        75
+
+    accuracy                           0.79       378
+   macro avg       0.67      0.67      0.67       378
+weighted avg       0.79      0.79      0.79       378
+
+[Test] Time taken:  0:00:11.376064

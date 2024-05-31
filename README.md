@@ -39,6 +39,7 @@ Prilikom pokretanja `main.py`, korisnik može uneti željena svojstva programa k
 
 <b> --type       </b>   (Ukucati deo klasifikacije koji će se pokrenuti - TRAIN, TEST ili TRAIN_AND_TEST) <br />
 <b> --model_name </b>   (Odabrati model koji će se koristiti - VGG ili XGBoost) <br />
+<b> --dataset_name </b>   (Odabrati skup podataka koji će se koristiti - ISIC ili HAM) <br />
 <b> --show_results </b>   (Prikaži grafike treninga i/ili testa) <br />
 <b> --save_results </b>   (Sačuvaj grafike treninga i/ili testa) <br />
 <b> --save_model </b>   (Sačuvaj modele tokom treninga) <br />
@@ -48,6 +49,16 @@ Informacije se takođe mogu naći unošenjem <b>--help</b> parametra pri pokreta
 ## Promena parametara
 
 Za napredna podešavanja, konstantni parametri su dati u datoteci `utils/constants.py`. Može se menjati putanja do skupa podataka, broj epoha i mnoge druge stvari.
+
+## Testiranje sa HAM10000 skupom podataka
+
+Dodata je podrška za <b>testiranje</b> na HAM10000 skupu podataka. Link za preuzimanje se može naći na sajtu [ovde](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000) klikom na dugme <i>Download</i>. Podaci će biti skinuti u `.zip` formatu koje treba dekompresovati i ubaciti u `data/dataset/archive` direktorijum.
+<br>
+Prilikom pokretanja programa, uneti argument komandne linije: 
+<br>
+<b><i>--dataset_name HAM</i></b>
+
+<i>Upozorenje: Skup podataka zauzima 6GB slobodnog prostora i nema podršku za trening
 
 ## Informacije o autorima i mentoru
 

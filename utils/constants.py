@@ -4,11 +4,18 @@ import torch
 DEVICE_NAME = 'cuda' if torch.cuda.is_available() else 'cpu'
 DEVICE = torch.device(DEVICE_NAME)
 
+# ISIC 2016 Task 3 Dataset Constants
 TRAIN_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3_Training_Data'
 TEST_DATASET_PATH = 'data/dataset/ISBI2016_ISIC_Part3_Test_Data'
 TRAIN_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Training_GroundTruth.csv'
 TEST_CSV_NAME = 'data/dataset/ISBI2016_ISIC_Part3_Test_GroundTruth.csv'
 VALIDATION_CSV_NAME = 'data/dataset/validation.csv'
+
+# HAM10000 Dataset Constants
+HAM10000_DATASET_PATH = 'data/dataset/archive/'
+HAM10000_CSV_NAME = 'data/dataset/archive/HAM10000_metadata.csv'
+HAM10000_IMAGES_1_PATH = 'HAM10000_images_part_1/'
+HAM10000_IMAGES_2_PATH = 'HAM10000_images_part_2/'
 
 SAVED_MODEL_PATH = 'models/'
 SAVED_PLOT_PATH = 'results/'
@@ -40,3 +47,7 @@ class SupportedModels(enum.Enum):
     CNN = 0
     VGG = 1
     XGBoost = 2
+
+class SupportedDataset(enum.Enum):
+    ISIC = 0
+    HAM = 1

@@ -19,7 +19,7 @@ class TrainNeuralNetwork():
 
     def startTrain(self):
         # Initialize dataset
-        trainDataset, validationDataset = loadDataset(isTrain=True, modelName=self.config['model_name'])
+        trainDataset, validationDataset = loadDataset(isTrain=True, modelName=self.config['model_name'], datasetName=self.config['dataset_name'])
 
         # dataloader
         TrainDataLoader = torch.utils.data.DataLoader(trainDataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
@@ -124,7 +124,7 @@ class TrainNeuralNetwork():
         plt.ylabel('Gubitak')
 
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_gubitak_po_epohi.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_' + self.config['dataset_name'] + '_gubitak_po_epohi.png')
         if self.config['show_plot']:
             plt.show()
         else:
@@ -161,7 +161,7 @@ class TrainNeuralNetwork():
 
         plt.tight_layout()
         if self.config['save_plot']:
-            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_metrike_po_epohi.png')
+            plt.savefig(SAVED_PLOT_PATH + self.config['model_name'] + '_' + self.config['dataset_name'] + '_metrike_po_epohi.png')
         if self.config['show_plot']:
             plt.show()
         else:
