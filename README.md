@@ -30,6 +30,10 @@ _ISIC 2016 Task 3:_
 - pandas
 - PIL
 
+## Modeli
+
+Ako ne želite da vršite trening, postojeće istrenirane modele možete skinuti preko [ovog linka](https://drive.google.com/drive/folders/1XcwSpf8gvSaUsEOvT9Lm8NGkfIrLn6dV?usp=sharing). Preuzmite ih u direktorijum `models/`.
+
 ## Argumenti komandne linije
 Prilikom pokretanja `main.py`, korisnik može uneti željena svojstva programa koji će se pokrenuti. Na primer, ako korisnik samo želi da trenira VGG i prikaže rezultate, to može uraditi sa sledećom komandom:
 <br />
@@ -67,6 +71,15 @@ Prilikom pokretanja programa, uneti argument komandne linije:
 
 ## Seminarski rad
 Seminarski rad na <b>srpskom</b> se može naći [ovde](documentation/klasifikacija%20raka.pdf)
+
+## Kako program funkcioniše?
+
+Prilikom pokretanja `main.py` datoteke, u zavisnosti od argumenata komandne linije, poziva se trening ili test (ili oba) iz te datoteke. 
+### Trening
+Kada se pokrene trening u `train.py` datoteci, podaci se smeštaju u DataLoader, klasi u PyTorch biblioteci specijalizovanoj za kreiranje skupa podataka iz sirovih podataka. Ovde se mogu odrediti npr. specijalne transformacije koje želimo da ima naš skup podatak, pa npr. možemo imati različite transformacije za XGBoost i VGG model.
+Nakon treniranja, model se čuva u `models/` direktorijum.
+### Test
+Kada se pokrene test u `test.py` datoteci, podaci se takođe smeštaju u Dataloader klasu sa podešenim transformacijama. Test onda u zavisnosti od modela, drugačije evaluira model i pokazuje grafičke rezultate, ali i pamti izlaz (ako je tako podešeno u argumentu komandne linije <i>--log</i>)
 
 ## Informacije o autorima i mentoru
 
