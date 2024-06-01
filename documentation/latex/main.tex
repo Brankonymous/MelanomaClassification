@@ -65,35 +65,35 @@ Katedra za racunarstvo i informatiku
 \section{Uvod} 
 Melanoma je tip kancera kože, invazivna bolest uzrokovana abnormalnim rastom melanocitnih stanica u telu, koje imaju tendenciju da se repliciraju i šire kroz limfne čvorove kako bi uništile okolna tkiva [1]. Iako Melanoma obuhvata relativno mali procenat kancera kože, ubedljivo je najsmrtonosnija.
 Nastaje u melanocitnim ćelijama koje proizvode melanin, pigment koji daje boju koži. Opasna priroda Melanome se ogleda u tome što ima mogućnost da se brzo rasprostrani na ostale delove tela, mnogo brže nego sve ostale varijante kancera kože.
-Oštećene stanice razvijaju mladež na spoljnjem sloju kože, kategorizovan kao maligni ili benigni, dok se Melanom smatra kancerom, jer je opasniji i preteći po život. Ovaj kancer kože je globalno rasprostranjena i opasna bolest, sa 300.000 novih dijagnostikovanih slučajeva i preko 1 milion smrtnih slučajeva svakog meseca širom sveta u 2018. godini [2]. Melanom je postao široko rasprostranjen u svetu, postajući 19. najčešća bolest sa najvišom stopom smrtnosti. Sem ovoga, opasna priroda Melanome se ogleda u tome što ima mogućnost da se brzo rasprostrani na ostale delove tela, mnogo brže nego sve ostale varijante kancera kože. Zbog ovih stavki, od izuzetne je važnosti što pre identifikovati i sprečiti dalje širenje ove vrste kancera kože. Ovo predstavlja primarni motivator za konstrukciju modela za klasifikovanje kancera Melanome.
+Oštećene stanice razvijaju mladež na spoljnjem sloju kože, kategorizovan kao maligni ili benigni, dok se Melanom smatra kancerom, jer je opasniji i preteći po život. Ovaj kancer kože je globalno rasprostranjena i opasna bolest, sa 300.000 novih dijagnostikovanih slučajeva i preko 1 milion smrtnih slučajeva svakog meseca širom sveta u 2018. godini [2]. Melanom je postao široko rasprostranjen u svetu, postajući 19. najčešća bolest sa najvišom stopom smrtnosti. Zbog ovih stavki, od izuzetne je važnosti što pre identifikovati i sprečiti dalje širenje ove vrste kancera kože. Ovo predstavlja primarni motivator za konstrukciju modela za klasifikovanje kancera Melanome.
 \par
 Neke od osnovnih poteškoća koje se susreću pri identifikovanju Melanome mogu biti:
 
 \begin{enumerate}
-    \item Složenost dijagnoze - Melanome su vrsta malignih tumora kože koji se mogu razlikovati po svojoj morfologiji, boji, veličini i teksturi.
-    \item Varijabilnost u obliku i veličini - Melanome mogu imati različite oblike, veličine i karakteristike koje se mogu razlikovati čak i unutar istog pacijenta.
-    \item Sličnosti sa benignim lezijama - Ponekad melanomi mogu imati slične karakteristike kao i benigni madeži ili druge lezije na koži. Pronalaženje razlika između Melanoma i benignih lezija može praviti ozbiljne probleme i najiskusnijim dermatolozima.
-    \item Potreba za ranim otkrivanjem - Melanoma ima potencijal da se širi i metastazira ako se ne dijagnosticira i leči na vreme. Stoga je važno da alati za otkrivanje budu što precizniji i brži kako bi se bolest otkrila u ranoj fazi.
+    \item \textbf {Složenost dijagnoze} - Melanome su vrsta malignih tumora kože koji se mogu razlikovati po svojoj morfologiji, boji, veličini i teksturi.
+    \item \textbf {Varijabilnost u obliku i veličini} - Melanome mogu imati različite oblike, veličine i karakteristike koje se mogu razlikovati čak i unutar istog pacijenta.
+    \item \textbf {Sličnosti sa benignim lezijama} - Ponekad melanomi mogu imati slične karakteristike kao i benigni madeži ili druge lezije na koži. Pronalaženje razlika između Melanoma i benignih lezija može praviti ozbiljne probleme i najiskusnijim dermatolozima.
+    \item \textbf {Potreba za ranim otkrivanjem} - Melanoma ima potencijal da se širi i metastazira ako se ne dijagnosticira i leči na vreme. Stoga je važno da alati za otkrivanje budu što precizniji i brži kako bi se bolest otkrila u ranoj fazi.
 \end{enumerate}
 
 \par
-Smisao ovog projekta leži u potrebi za klasifikacijom raka kože, radi brže i efikasnije detekcije. Inspiracija je bila postojeći rad na ovu temu koji pokazuje obećavajuće rezultate dubokim učenjem [3]. Korišćena su dva modela za mašinsko učenje trenirana na ISIC 2016 skupu podataka (podzadatak 3) [8]. Time, napravljen je istraživački rad u pogledu poređenja modela sa dubokim mašinskim učenjem (VGG) i modelom zasnovanim na drvetima odlučivanja (XGBoost).  
+Smisao ovog projekta leži u potrebi za klasifikacijom raka kože, radi brže i efikasnije detekcije. Inspiracija je bila postojeći rad na ovu temu koji pokazuje obećavajuće rezultate dubokim učenjem [3]. Korišćena su dva modela za mašinsko učenje trenirana na ISIC 2016 skupu podataka (podzadatak 3) [8]. Time, napravljen je rad koji poredi modele sa dubokim mašinskim učenjem (VGG) i modelom zasnovanim na drvetima odlučivanja (XGBoost).  
 
 \section{Okruženje projekta}
 
 \subsection{Jezik i neophodni moduli}
-U ovom projektu koristimo Python 3 zbog njegove popularnosti u zajednici mašinskog učenja, bogatog skupa biblioteka i jednostavne sintakse [9]. Python omogućava brzu i efikasnu implementaciju algoritama mašinskog učenja i manipulaciju podacima. Sledeće biblioteke su korišćene u našem projektu:
+U ovom projektu koristi se Python 3 zbog njegove popularnosti u zajednici mašinskog učenja, bogatog skupa biblioteka i jednostavne sintakse [9]. Python omogućava brzu i efikasnu implementaciju algoritama mašinskog učenja i manipulaciju podacima. Sledeće biblioteke su korišćene:
 
 \begin{itemize}
     \item \textbf{torch} - PyTorch je otvorena biblioteka za duboko učenje koja pruža fleksibilnost i efikasnost u implementaciji i treniranju neuralnih mreža.
     \item \textbf{torchvision} - Dodatak PyTorcha koji sadrži popularne modele, skupove podataka i transformacije za rad sa slikama.
-    \item \textbf{numpy} - Biblioteka za rad sa nizovima (arrays) i matricama, koja omogućava efikasne matematičke operacije potrebne za mašinsko učenje.
+    \item \textbf{numpy} - Biblioteka za rad sa nizovima i matricama, koja omogućava efikasne matematičke operacije potrebne za mašinsko učenje.
     \item \textbf{scikit-learn} - Biblioteka koja sadrži jednostavne i efikasne alate za rudarenje podacima (data mining) i analizu podataka, uključujući mnoge algoritme mašinskog učenja.
     \item \textbf{pickle} - Modul za serijalizaciju i deserializaciju objekata u Pythonu, što omogućava čuvanje i učitavanje modela mašinskog učenja.
     \item \textbf{matplotlib} - Biblioteka za kreiranje statičkih, animiranih i interaktivnih vizualizacija u Pythonu.
     \item \textbf{seaborn} - Biblioteka zasnovana na matplotlib-u koja omogućava jednostavno kreiranje atraktivnih i informativnih statističkih grafika.
     \item \textbf{pandas} - Biblioteka za manipulaciju i analizu podataka, koja pruža strukture podataka i operacije potrebne za rad sa tabelarnim podacima.
-    \item \textbf{PIL} - Python Imaging Library, koja omogućava otvaranje, manipulaciju i spremanje različitih formata slika.
+    \item \textbf{PIL} - Omogućava otvaranje i obradu različitih formata slika.
 \end{itemize}
 
 \subsection{Kako pokrenuti projekat}
@@ -107,7 +107,7 @@ Da biste pokrenuli repozitorijum, neophodno je pratiti sledeće korake:
     \item Koristeći Python, pokrenuti \texttt{main.py}.
 \end{enumerate}
 
-\textit{Za detaljnije instrukcije, posetiti repozitorijum i pročitati početnu README.md stranu}
+\textit{Za detaljnije instrukcije, posetiti repozitorijum i pročitati početnu README.md stranu [11]}
 
 \section{Priprema podataka}
 Priprema podataka u mašinskom učenju obuhvata sve korake i tehnike koje se primenjuju kako bi se sirovi podaci transformisali u format pogodan za analizu i treniranje modela. Ovaj ključni korak u procesu mašinskog učenja ima za cilj da obezbedi kvalitetne, relevantne i dobro strukturirane podatke koji će omogućiti efikasno učenje modela i generisanje tačnih predikcija. Priprema podataka podrazumeva niz aktivnosti, uključujući čišćenje podataka radi uklanjanja grešaka, nedostajućih vrednosti ili duplikata.
@@ -121,15 +121,9 @@ Priprema podataka u mašinskom učenju obuhvata sve korake i tehnike koje se pri
 
 \subsection{Analiza skupa podataka}
 
-Analiza skupa podataka pokazala je da imamo odvojene trening i test skupove. Trening skup se sastoji od 899 slika, od kojih je 726 označeno kao benigno, dok je 173 označeno kao maligno. Test skup sadrži 378 slika, od kojih je 303 benigno, a 75 maligno. Ovi podaci ukazuju na značajnu nebalansiranost klasa, što zahteva posebnu pažnju prilikom treniranja modela kako bismo osigurali tačne i nepristrasne rezultate.
+Analiza skupa podataka pokazala je da imamo odvojene trening i test skupove. Trening skup se sastoji od 899 slika, od kojih je 726 označeno kao benigno, dok je 173 označeno kao maligno. Test skup sadrži 378 slika, od kojih je 303 benigno, a 75 maligno. Ovi podaci ukazuju na značajnu nebalansiranost klasa, što zahteva posebnu pažnju prilikom treniranja modela kako bi se osigurali tačni i nepristrasni rezultati.
 \par
-U skupu podataka nema nepostojećih vrednosti, što eliminiše potrebu za dodatnim čišćenjem podataka. 
-\par
-Date slike su u JPEG formatu, ali različitih rezolucija. Ovo znači da ćemo morati da skaliramo slike na uniformnu veličinu kako bismo osigurali konzistentnost prilikom obrade i analize.
-\par
-Ova analiza nam pruža ključne uvide koji će pomoći u pripremi podataka i dizajniranju odgovarajućih tehnika za treniranje modela, posebno imajući u vidu problem nebalansiranosti klasa.
-
-
+U skupu podataka nema nepostojećih vrednosti, što eliminiše potrebu za dodatnim čišćenjem podataka. Date slike su u JPEG formatu, ali različitih rezolucija. Samim tim, javlja se potreba za skaliranjem slika na uniformnu veličinu kako bi se osigurala konzistentnost prilikom obrade i analize.
 
 \subsection{Obrada skupa podataka}
 
@@ -145,7 +139,7 @@ Normalizaciju podataka standardizuje RGB intenzitet piksela, koji se može drast
 x' = \frac{x - \mu}{\sigma}
 \]
 
-gde je \( x \) originalna vrednost, \( \mu \) prosek svih vrednosti, a \( \sigma \) standardna devijacija. S obzirom da XGBoost ima već ugrađenu normalizaciju, ovaj korak je odrađen samo za VGG model, koristeći \( \mu \) i \( \sigma \) izvedene iz ImageNet skupa podataka jer je model pretreniran na tom skupu, pa se drugim rečima može reći da je \textit{"naviknut"} na takve podatke.
+gde je \( x \) originalna vrednost, \( \mu \) prosek svih vrednosti, a \( \sigma \) standardna devijacija. S obzirom da XGBoost ima već ugrađenu normalizaciju, ovaj korak je odrađen samo za VGG model, koristeći \( \mu \) i \( \sigma \) izvedene iz ImageNet skupa podataka jer je model pretreniran na tom skupu [4], pa se drugim rečima može reći da je \textit{"naviknut"} na takve podatke.
 
 \subsubsection{Smanjivanje veličine slike}
 Funkcija \texttt{Resize} u PyTorchu, koja je deo modula \texttt{torchvision.transforms}, koristi se za promenu veličine slika na određenu ciljnu veličinu. Ovo je posebno korisno za projekat jer se radi sa skupovima podataka koji sadrže slike različitih rezolucija - omogućava uniformnost ulaznih podataka pre nego što se proslede modelima mašinskog učenja. Npr. VGG model, čiji konvolucioni slojevi imaju fiksirane ulazne veličine, zahtevaju da se slike moraju poklopiti sa ulaznim veličinama. Svaka instanca je podešena na rezoluciju 128x128.
@@ -153,7 +147,7 @@ Funkcija \texttt{Resize} u PyTorchu, koja je deo modula \texttt{torchvision.tran
 \subsubsection{Transformacije slike}
 Korišćene su različite transformacije podataka radi povećanja raznolikosti, samim tim rađeno je i na otklanjanju mogućnosti preprilagođavanja. Ove vrste transformisanja podataka mogu smanjiti i senzitivnost na šumove. Sa verovatnoćom od 0.5 (50\%), svaka od ovih metoda će se pozvati i izvršiti na instanci VGG trening skupa.
 \par
-Sledeće transformacije su primenjene.
+Sledeće transformacije su primenjene:
 
 \begin{enumerate}
     \item Rotacija - obrće se slika za nasumično generisanu vrednost ugla
@@ -179,15 +173,15 @@ Sledeće transformacije su primenjene.
     \end{figure}
 \end{enumerate}
 \par
-Transformaciju podataka radi pretvaranja kategorijalnih varijabli u numerički format, kao i inženjering karakteristika radi kreiranja novih atributa ili izbora relevantnih atributa za analizu. Ovaj pristup ima posebnu primenu u radu sa XGBoost modelom s tim da on nije pogodan za primenu nad sirovim podacima slika već zahteva neku vrstu ekstrakcije i inzenjering karakteristika skupa podataka kako bi mogao da radi.
+Podaci se transformišu radi pretvaranja kategoričkih varijabli u numerički format, kao i inženjeerskih karakteristika radi kreiranja novih atributa ili izbora relevantnih atributa za analizu. Ovaj pristup ima posebnu primenu u radu sa XGBoost modelom s tim da on nije pogodan za primenu nad sirovim podacima slika već zahteva obradu skupa podataka kako bi mogao da se trenira.
 
 \subsubsection{Validacioni skup}
 
-Prilikom rada sa modelom koji koristi dubinsko mašinsko učenje, poželjno je pratiti njegov progres kroz trening epohe. Iz trening skupa, prilikom rada sa VGG modelom izdvojen je validacioni skup koji je uzeo prvih 10\% trening skupa iz svake klase pojedinačno. Ovo nam omogućava da evaluiramo model posle svake epohe i prevremeno ga zaustavimo ako bude bilo potrebe za tim zato što model koji se trenira na trening skupu, neće imati uvid u validacioni skup tokom treninga. Ako se desi skok funkcije gubitka na validacionom skupu, ovo nam može dati znak da se model preprilagođava, pa možemo zaustaviti prevremeno model ukoliko bude bilo potrebe.
+Prilikom rada sa modelom koji koristi duboko mašinsko učenje, poželjno je pratiti njegov progres kroz trening epohe. Iz trening skupa, prilikom rada sa VGG modelom izdvojen je validacioni skup koji je uzeo prvih 10\% trening skupa iz svake klase pojedinačno. Ovo omogućava da se model evaluira posle svake epohe i da se prevremeno zaustavi ako bude bilo potrebe za tim zato što model koji se trenira na trening skupu, neće imati uvid u validacioni skup tokom treninga. Ako se desi skok funkcije gubitka na validacionom skupu, ovo može dati znak da se model preprilagođava, pa treba zaustaviti treniranje modela.
 
 \subsection{Dodatni skup podataka za test - HAM10000}
 
-Radi praćenja kvaliteta modela, dodata je podrška i za druge skupova podataka pri testiranju modela. To je demonstrirano dodavanjem HAM1000 [7] skupa koji sadrži 10015 slika, od kojih 1113 sadrži maligni rak, tj. 11.11\% celokupnog skupa podataka. Ostatak slika je obeležen kao benigni tip.
+Radi praćenja kvaliteta modela, dodata je podrška i za druge skupova podataka pri testiranju modela. To je demonstrirano dodavanjem HAM1000 [7] skupa koji sadrži 10015 slika, od kojih 1113 sadrži maligni tip raka, tj. 11.11\% celokupnog skupa podataka. Ostatak slika je obeležen kao benigni tip.
 
 \section{Modeli}
 
@@ -199,7 +193,7 @@ Upotreba različitih modela za klasifikaciju je od velike koristi zbog razlike u
 
 VGG (Visual Geometry Group) ima arhitekturu konvolucione neuronske mreže, razvijen je na Oksfordskom univerzitetu 2014. godine.
 \par
-VGG-11 je varijanta VGG-a sačinjena od 11 slojeva, uklučujući konvolucione, maksimalno-bazenske \textit{(eng. max-pooling)} i potpuno povezane slojeve [4]. Karakterističan je po tome što koristi male 3x3 konvolucione filtere sa pomerajem veličine 1 piksel i 2x2 maksimalno-bazenske slojeve sa pomerajem 2, što pomaže sa čuvanjem informacija i efikasno identifikuje složene uzorke u prostoru karakteristika slike, zadrzavajuci razuman broj parametara unutar neuronske mreze. Naš model takođe sadrži normalizaciju po grupama \textit{(eng. batch normalization)}
+VGG-11 je varijanta VGG-a sačinjena od 11 slojeva, uklučujući konvolucione, maksimalno-bazenske \textit{(eng. max-pooling)} i potpuno povezane slojeve [4]. Karakterističan je po tome što koristi male 3x3 konvolucione filtere sa pomerajem veličine 1 piksel i 2x2 maksimalno-bazenske slojeve sa pomerajem 2, što pomaže sa čuvanjem informacija i efikasno identifikuje složene uzorke u prostoru karakteristika slike, zadržavajucći razuman broj parametara unutar neuronske mreze. Model takođe sadrži i normalizaciju po grupama \textit{(eng. batch normalization)}
 
 \begin{figure}[H]
     \centering
@@ -208,18 +202,18 @@ VGG-11 je varijanta VGG-a sačinjena od 11 slojeva, uklučujući konvolucione, m
     \label{Arhitektura VGG11}
 \end{figure}
 
-Prednost VGG-11 modela je u tome što ne zahteva nikakvu vrstu inzenjerstva karakteristika, već radi automatski nad sirovim podacima slika. Samim tim što je bazirana na dubokim neuronskim mrežama, ima mogućnost da uoči kompleksne paterne u reprezentaciji slike. Koriščen je pretreniran VGG model nad velikim skupom podataka ImageNet. Na ovaj način je model već naučen da prepoznaje mnoštvo detalja sa slika koje se kasnije mogu primeniti na naš skup podataka.
+Prednost VGG-11 modela je u tome što ne zahteva nikakvu vrstu izdvajanja karakteristika, već radi automatski nad sirovim podacima slika. Samim tim što je baziran na dubokim neuronskim mrežama, ima mogućnost da uoči kompleksne obrasce u reprezentaciji slike. Koriščen je pretreniran VGG model nad velikim skupom podataka ImageNet. Na ovaj način je model već naučen da prepoznaje mnoštvo detalja sa slika koje se kasnije mogu primeniti na naš skup podataka.
 
 \subsubsection{Izlazna funkcija}
 Izlazna funkcija je Softmax koja pretvara izlazne vrednosti iz neuronskih mreza u verovatnosnu vrednost za svaku od ciljnih klasa.
-Matematička formula za Softmax funkciju za vektor \(\mathbf{z}\) od \(n\) elemenata je:
+Matematička formula Softmax funkcije za vektor \(\mathbf{z}\) od \(n\) elemenata je:
 
 \[ \sigma(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^n e^{z_j}} \]
 
 Gde je:
 \begin{itemize}
     \item \( \sigma(\mathbf{z})_i \) verovatnoća klase \(i\)
-    \item \( z_i \) ulazna vrednost (logit) za klasu \(i\)
+    \item \( z_i \) ulazna vrednost za klasu \(i\)
     \item \( n \) ukupan broj klasa
 \end{itemize}
 
@@ -227,11 +221,11 @@ Ova funkcija osigurava da sve izlazne vrednosti budu nenegativne i da njihov zbi
 
 \subsubsection{Hiperparametri}
 
-Hiperparametri su ključni za treniranje modela mašinskog učenja, jer određuju kako će model učiti iz podataka. Model koristi sledeće hiperparametre:
+Hiperparametri su ključni za treniranje modela mašinskog učenja, jer određuju kako će model učiti iz podataka. Model u projektu koristi sledeće hiperparametre:
 
 \begin{itemize}
     \item \textbf{Veličina grupe}: Veličina grupe \textit{(eng. Batch Size)} od 256 označava broj primera iz skupa podataka koji će se obraditi pre nego što se parametri modela ažuriraju. Veća veličina grupe može ubrzati treniranje, ali zahteva više memorije.
-    \item \textbf{Broj epoha}: Model će imati 12 epoha, što znači da će kompletan skup podataka biti prolazan kroz model 12 puta. Svaka epoha omogućava modelu da bolje nauči obrasce u podacima.
+    \item \textbf{Broj epoha}: Model će imati 12 epoha, što znači da će se skup podataka za trening iskoristiti 12 puta. Svaka epoha omogućava modelu da bolje nauči obrasce u podacima.
     \item \textbf{Stopa učenja}: Stopa učenja \textit{(eng. Learning Rate)} je postavljena na $10^{-4}$, što određuje korak kojim se parametri modela ažuriraju tokom treniranja. Manja stopa učenja može dovesti do stabilnijeg konvergiranja, dok veća stopa može ubrzati učenje, ali i izazvati nestabilnost.
     \item \textbf{Korak stope učenja}: Korak stope učenja je 10, što znači da će se stopa učenja smanjivati svakih 10 epoha kako bi se omogućilo finije podešavanje modela tokom treniranja.
     \item \textbf{Funkcija gubitka}: Koristi se utežinjena unakrsna entropija kako bismo kompenzovali neravnotežu između klasa u skupu podataka. Ova funkcija meri razliku između predikcija modela i stvarnih vrednosti.
@@ -241,7 +235,7 @@ Hiperparametri su ključni za treniranje modela mašinskog učenja, jer određuj
 \subsection{XGBoost}
 
 \subsubsection{O modelu}
-XGBoost (Extreme Gradient Boosting) je metod ansambliranog učenja baziranog na drvećima odlučivanja [5]. Radi tako što gradi seriju drveća odlučivanja sekvencijalno, gde svako sledeće drvo ispravlja greške napravljene od strane prethodnih. Arhitektura XGBoost-a se sastoji od više drveća odlučivanja raspoređenih u ansamblu pojačavanja, pri čemu svako drvo uči da predviđa ostatke prethodnih drveća.
+XGBoost (Extreme Gradient Boosting) je metod mašinskog učenja zasnovan na drvetima odlučivanja [5]. Radi tako što gradi seriju drveća odlučivanja sekvencijalno, gde svako sledeće drvo ispravlja greške napravljene od strane prethodnih. Arhitektura XGBoost-a se sastoji od više drveća odlučivanja raspoređenih u ansamblu pojačavanja, pri čemu svako drvo uči da predviđa ostatke prethodnih drveća.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{xgboost.png} 
@@ -250,8 +244,6 @@ XGBoost (Extreme Gradient Boosting) je metod ansambliranog učenja baziranog na 
 \end{figure}
 
 XGBoost se tradicionalno koristi za klasifikaciju tabularnih podataka, pa je nužno izvršiti neku vrstu izdvajanja atributa. Ovo je urađeno tako što su ulazne spljošćene na jednodimenzione nizove, koju XGBoost prima za ulaz.
-\par
-XGBoost se trenira koristeći metodu fit, gde se osobine i odgovarajuće oznake prosleđuju kao ulaz. Model uči da klasifikuje slike na osnovu izdvojenih osobina.
 
 \subsubsection{Hiperparametri}
 
@@ -268,9 +260,9 @@ Koristeći GridSearchCV, klasu biblioteke \textit{scikit-learn}, otkriveni su na
 \section{Ocenjivanje kvaliteta modela}
 \subsection{F1 mera}
 
-F1 mera je karakterističan po tome što daje isti prioritet preciznosti i odzivu, samim tim se može prikazati harmonijskom sredinom ove dve bitne metrike evaluacije modela.
-\newline
-Preciznost \textit{(eng. precision)} predstavlja sposobnost modela da ne označi negativan uzorak kao pozitivan, a odziv \textit{(eng. recall)} predstavlja sposobnost modela da pronađe sve pozitivne uzorke. Ako označimo broj ispravno klasifikovanih pozitivnih primera kao $TP$, negativnih kao $TN$, broj negativnih primera pogrešno klasifikovanih kao pozitivni kao $FP$ i broj pozitivnih primera pogrešno klasifikovanih kao negativni kao $FN$ dobijamo sledeće jednačine:
+Preciznost \textit{(eng. precision)} predstavlja sposobnost modela da ne označi negativan uzorak kao pozitivan, a odziv \textit{(eng. recall)} predstavlja sposobnost modela da pronađe sve pozitivne uzorke. F1 mera je karakteristična po tome što daje isti prioritet preciznosti i odzivu, samim tim se može prikazati harmonijskom sredinom ove dve bitne metrike evaluacije modela. 
+\par
+Ako označimo broj ispravno klasifikovanih pozitivnih primera kao $TP$, negativnih kao $TN$, broj negativnih primera pogrešno klasifikovanih kao pozitivni kao $FP$ i broj pozitivnih primera pogrešno klasifikovanih kao negativni kao $FN$ dobijamo sledeće jednačine:
 
 \begin{equation}
 \text{Preciznost} = \frac{\text{TP}}{\text{TP} + \text{FP}}
@@ -288,7 +280,7 @@ Harmonijska sredina se koristi u izračunavanju F1 mere jer više kažnjava ekst
 
 \subsection{Matrica konfuzije}
 
-Matrica konfuzije je ključan alat u evaluaciji performansi modela klasifikacije. On omogućava pregled rezultata klasifikacije kroz matricu koja prikazuje stvarne protiv predviđenih vrednosti za svaku klasu i time pruža detaljan uvid u performanse modela, omogućavajući da identifikujemo koje klase model dobro prepoznaje, a koje klase su problematične. NKao deo rezultata, prikazana je i matrica konfuzije za test skup.
+Matrica konfuzije je ključan alat u evaluaciji performansi modela klasifikacije. On omogućava pregled rezultata klasifikacije kroz matricu koja prikazuje stvarne protiv predviđenih vrednosti za svaku klasu i time pruža detaljan uvid u performanse modela, omogućavajući da identifikujemo koje klase model dobro prepoznaje, a koje klase su problematične. Kao deo rezultata, prikazana je i matrica konfuzije za test skup.
 
 \subsection{Grafički prikaz treninga}
 
@@ -310,7 +302,7 @@ Prikaz ovih metrika tokom treninga omogućava nam da pratimo kako se model pobol
 
 \subsubsection{Trening}
 
-Prilikom treniranja, primećuje se zastoj posle 10-te epohe u funkciji gubitka. Čak i povećavanje broja epoha na 30 ne postiže bolje rezultate funkcije gubitka.
+Prilikom treniranja, primećuje se zastoj posle 10-te epohe u metrikama kao što je F1 mera. Pokazano je da i povećavanje broja epoha na 30 ne postiže bolje rezultate gledajući te metrike, ali i funkciju gubitka.
 
 \begin{figure}[H]
     \centering
@@ -318,8 +310,6 @@ Prilikom treniranja, primećuje se zastoj posle 10-te epohe u funkciji gubitka. 
     \caption{Funkcija gubitka kroz epohe za VGG-11 model} 
     \label{VGG gubitak po epohi}
 \end{figure}
-
-Ovo se i vidi na metrikama kvaliteta modela kao što je F1 metrika.
 
 \begin{figure}[H]
     \centering
@@ -360,7 +350,7 @@ VGG-11 se pokazuje dobro, davajući rezultat 0.78 po F1 metrici. Vidi se da mode
     \label{VGG matrica konfuzije}
 \end{figure}
 
-Primećuje se jasna greška u predikciji malignog raka, kada je on zapravio bio benigni. Ovo nam pruža značajan uvid u greške modela i pretpostavlja se da je jedan od glavnih uzroka za ovo ponašanje mala količina podataka za trening.
+Primećuje se jasna greška u predikciji malignog raka, kada je on zapravio bio benigni. Ovo pruža značajan uvid u greške modela i pretpostavlja se da je jedan od glavnih uzroka za ovo ponašanje mala količina podataka za trening.
 
 \subsection{XGBoost}
 
@@ -416,7 +406,7 @@ Odziv & 0.67 & \textbf{0.79} \\ \hline
 
 \subsection{Test na HAM10000 skupu podataka}
 
-Rezultati na ovom skupu potvrđuju gornje rezultate, davajući sličan rezultat po različitim metrikama.
+Rezultati na ovom skupu potvrđuju gornje rezultate, davajući sličan rezultat po različitim metrikama. Gledajući F1 meru, VGG i ovde predstavlja bolji model, davajući 0.74 rezultat u poređenju sa XGBoost modelom koji daje rezultat 0.64.
 
 \subsubsection{VGG}
 
@@ -463,8 +453,8 @@ Rezultati na ovom skupu potvrđuju gornje rezultate, davajući sličan rezultat 
     \label{XGBoost HAM matrica konfuzije}
 \end{figure}
 
-\section{Zakljucak}
-Ovaj istraživački rad je produbio znanje autora o temama klasifikacije, i pokazao jasnu superiornost jačih modela i njegovih prednosti. Za dalji napredak ovog projekta, bio bi značajan veći i bolji skup podataka, koji je izbegnut zbog ogromne veličine datoteka prilikom rada sa podacima.
+\section{Zaključak}
+Ovaj rad je produbio znanje autora o temama klasifikacije, i pokazao superiornost modela sa dubokim učenjem. Za dalji napredak ovog projekta, bio bi značajan veći i bolji skup podataka za trening, koji je izbegnut zbog ogromne veličine datoteka tj. manjka resursa.
 
 \section{Literatura}
 
@@ -479,6 +469,7 @@ Ovaj istraživački rad je produbio znanje autora o temama klasifikacije, i poka
   \item Gutman, D.; Codella, N. C. F.; Celebi, E.; Helba, B.; Marchetti, M.; Mishra, N.; Halpern, A., “Skin Lesion Analysis toward Melanoma Detection: A Challenge at the International Symposium on Biomedical Imaging (ISBI) 2016, hosted by the International Skin Imaging Collaboration (ISIC),” eprint arXiv:1605.01397, 2016.
   \item Van Rossum, G., \& Drake, F. L. The Python Language Reference, 2009.
   \item Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., … Chintala, S. (2019). PyTorch: An Imperative Style, High-Performance Deep Learning Library. In Advances in Neural Information Processing Systems 32 (pp. 8024–8035)
+  \item Grbic, B.; Zolotarev, I. \href{https://github.com/Brankonymous/MelanomaClassification}{Github repositorium - Melanoma Classification}, 2024. 
 \end{enumerate}
 
 \end{document}

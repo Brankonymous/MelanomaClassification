@@ -43,12 +43,17 @@ Prilikom pokretanja `main.py`, korisnik može uneti željena svojstva programa k
 <b> --show_results </b>   (Prikaži grafike treninga i/ili testa) <br />
 <b> --save_results </b>   (Sačuvaj grafike treninga i/ili testa) <br />
 <b> --save_model </b>   (Sačuvaj modele tokom treninga) <br />
+<b> --log </b>   (Ispis standardnog izlaza u .log fajl) <br />
 
 Informacije se takođe mogu naći unošenjem <b>--help</b> parametra pri pokretanju `main.py`
 
 ## Promena parametara
 
 Za napredna podešavanja, konstantni parametri su dati u datoteci `utils/constants.py`. Može se menjati putanja do skupa podataka, broj epoha i mnoge druge stvari.
+
+## Rezultati
+
+Rezultate, na osnovu modela i skupa podataka, možete videti u `results/` direktorijumu. U formatu `.log` je sačuvan ispis modela.
 
 ## Testiranje sa HAM10000 skupom podataka
 
