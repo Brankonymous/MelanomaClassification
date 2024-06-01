@@ -66,7 +66,7 @@ Prilikom pokretanja programa, uneti argument komandne linije:
 <i>Upozorenje: Skup podataka zauzima 6GB slobodnog prostora i nema podršku za trening</i>
 
 ## Seminarski rad
-Seminarski rad na <b>srpskom</b> se može naći [ovde](documentation/seminarski%20rad.pdf)
+Seminarski rad na <b>srpskom</b> se može naći [ovde](documentation/klasifikacija%20raka.pdf)
 
 ## Informacije o autorima i mentoru
 
