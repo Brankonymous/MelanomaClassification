@@ -33,7 +33,7 @@ _ISIC 2016 Task 3:_
 
 ## Preuzimanje modela
 
-Ako ne želite da trenirate modele, postojeće istrenirane modele možete skinuti preko [ovog linka](https://drive.google.com/drive/folders/1XcwSpf8gvSaUsEOvT9Lm8NGkfIrLn6dV?usp=sharing). Preuzmite ih u direktorijum `models/`.
+Ako ne želite da trenirate modele, postojeće istrenirane modele možete preuzeti preko [ovog linka](https://drive.google.com/drive/folders/1XcwSpf8gvSaUsEOvT9Lm8NGkfIrLn6dV?usp=sharing). Preuzmite ih u direktorijum `models/`.
 
 ## Argumenti komandne linije
 Prilikom pokretanja `main.py`, korisnik može uneti željena svojstva programa koji će se pokrenuti. Na primer, ako korisnik samo želi da trenira VGG i prikaže rezultate, to može uraditi sa sledećom komandom:
