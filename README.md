@@ -12,7 +12,7 @@ _Poželjno je imati CUDA uređaj za brže izvršavanje modela (oba modela su opt
 
 ## Uputstvo za preuzimanje skupa podataka
 
-Preuzeti [ISIC 2016 Task 3 skup podataka](https://challenge.isic-archive.com/data/#2016) i dekompresovati datoteku u direktorijum `data/dataset`. Ovo ukljucuje `.zip` podatke za trening i test, kao i njihove datoteke koje sadrže labele (eng. ground truth) u `.csv` formatu. <br /><br />
+Preuzeti [ISIC 2016 Task 3 skup podataka](https://challenge.isic-archive.com/data/#2016) i dekompresovati datoteku u direktorijum `data/dataset`. Ovo ukljucuje `.zip` podatke za trening i test, kao i datoteke koje sadrže labele (eng. ground truth) u `.csv` formatu. <br /><br />
 _ISIC 2016 Task 3:_
 - [Slike za trening skup](https://isic-challenge-data.s3.amazonaws.com/2016/ISBI2016_ISIC_Part3_Training_Data.zip)
 - [Labelirani trening skup](https://isic-challenge-data.s3.amazonaws.com/2016/ISBI2016_ISIC_Part3_Training_GroundTruth.csv)
