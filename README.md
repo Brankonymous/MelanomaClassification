@@ -1,4 +1,4 @@
-# Klasifikacija tumora
+# Klasifikacija raka kože
 
 ## Kako pokrenuti repozitorijum
 Da biste pokrenuli repozitorijum, neophodno je pratiti sledeće korake:
