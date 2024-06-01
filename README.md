@@ -4,8 +4,9 @@
 Da biste pokrenuli repozitorijum, neophodno je pratiti sledeće korake:
 1. Preuzeti skup podataka
 2. Instalirati Python 3 i njegove neophodne biblioteke
-3. Podesiti argumente komandne linije (opciono)
-4. Koristeći Python, pokrenuti `main.py`
+3. Preuzeti postojeće (istrenirane) modele (opciono)
+4. Podesiti argumente komandne linije (opciono)
+5. Koristeći Python, pokrenuti `main.py`
 
 _Poželjno je imati CUDA uređaj za brže izvršavanje modela (oba modela su optimizovana na rad sa grafičkom kartom)_
 
