@@ -76,10 +76,10 @@ Seminarski rad na <b>srpskom</b> se može naći [ovde](documentation/klasifikaci
 
 Prilikom pokretanja `main.py` datoteke, u zavisnosti od argumenata komandne linije, poziva se trening ili test (ili oba) iz te datoteke. 
 ### Trening
-Kada se pokrene trening u `train.py` datoteci, podaci se smeštaju u DataLoader, klasi u PyTorch biblioteci specijalizovanoj za kreiranje skupa podataka iz sirovih podataka. Ovde se mogu odrediti npr. specijalne transformacije koje želimo da ima naš skup podatak, pa npr. možemo imati različite transformacije za XGBoost i VGG model.
+Kada se pokrene trening u `train.py` datoteci, podaci se smeštaju u DataLoader, klasi u PyTorch biblioteci specijalizovanoj za kreiranje skupa podataka iz sirovih podataka. Ovde se mogu odrediti npr. specijalne transformacije koje želimo da ima naš skup, tj. možemo imati različite transformacije za XGBoost i VGG model.
 Nakon treniranja, model se čuva u `models/` direktorijum.
 ### Test
-Kada se pokrene test u `test.py` datoteci, podaci se takođe smeštaju u Dataloader klasu sa podešenim transformacijama. Test onda u zavisnosti od modela, drugačije evaluira model i pokazuje grafičke rezultate, ali i pamti izlaz (ako je tako podešeno u argumentu komandne linije <i>--log</i>)
+Kada se pokrene test u `test.py` datoteci, podaci se takođe smeštaju u Dataloader klasu sa izabranim transformacijama. Test datoteka onda u zavisnosti od modela, drugačije evaluira model i pokazuje grafičke rezultate, ali i pamti izlaz (ako je tako podešeno u argumentu komandne linije <i>--log</i>)
 
 ## Informacije o autorima i mentoru
 
